@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM</title>
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script defer type="module" src="./js/script.js"></script>
+</head>
+<body>
+  
+  <header class="header">
+    <div class="header__container flex">
+      <a href="#" class="header__logo">
+        <img src="./img/logo.svg" alt="Логотип Skillbus">
+      </a>
+      <form class="header__autocomplete">
+        <input id="header__input" class="header__input" type="text" placeholder="Введите ФИО клиента для поиска">
+      </form>
+    </div>
+  </header>
+
+  <main>
+    <section class="clients">
+      <div class="clients__container">
+        <h1 class="clients__title">Клиенты</h1>
+
+        <table class="clients__table table" width="100%" cellspasing="0" cellpadding="0">
+
+          <thead class="table__thead thead">
+            <tr class="thead__row">
+
+              <th class="thead__th thead__th--id">ID
+                <svg class="thead__icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 6L2.705 6.705L5.5 3.915L5.5 10L6.5 10L6.5 3.915L9.29 6.71L10 6L6 2L2 6Z" fill="#9873FF"/>
+                </svg>
+              </th>
+
+              <th class="thead__th thead__th--name">Фамилия Имя Отчество
+                <svg class="thead__icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 6L9.295 5.295L6.5 8.085L6.5 2H5.5L5.5 8.085L2.71 5.29L2 6L6 10L10 6Z" fill="#9873FF"/>
+                </svg>
+                <span class="thead__sort-name">А-Я</span>
+              </th>
+
+              <th class="thead__th thead__th--create">Дата и время создания
+                <svg class="thead__icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 6L9.295 5.295L6.5 8.085L6.5 2H5.5L5.5 8.085L2.71 5.29L2 6L6 10L10 6Z" fill="#9873FF"/>
+                </svg>
+              </th>
+
+              <th class="thead__th thead__th--change">Последние изменения
+                <svg class="thead__icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 6L9.295 5.295L6.5 8.085L6.5 2H5.5L5.5 8.085L2.71 5.29L2 6L6 10L10 6Z" fill="#9873FF"/>
+                </svg>
+              </th>
+
+              <th class="thead__th thead__th--contacts">Контакты</th>
+              <th class="thead__th thead__th--actions">Действия</th>
+
+            </tr>
+          </thead>
+
+          <tbody id="tbody" class="table__tbody tbody">
+            <tr class="tbody__row">
+              <td class="tbody__td tbody__td--id">123456</td>
+              <td class="tbody__td tbody__td--name">Елютин Павел Игоревич</td>
+              <td class="tbody__td tbody__td--create">1fdsaf2242fd</td>
+              <td class="tbody__td tbody__td--change">1fdsaf2242fd</td>
+              <td class="tbody__td tbody__td--contacts">1fdsaf2242fd</td>
+              <td class="tbody__td tbody__td--actions">1fdsaf2242fd</td>
+            </tr>
+          </tbody>
+
+        </table>
+
+        <button class="btn__add-client btn-reset">
+          <svg class="btn__icon" width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.5 8C16.71 8 18.5 6.21 18.5 4C18.5 1.79 16.71 0 14.5 0C12.29 0 10.5 1.79 10.5 4C10.5 6.21 12.29 8 14.5 8ZM5.5 6V3H3.5V6H0.5V8H3.5V11H5.5V8H8.5V6H5.5ZM14.5 10C11.83 10 6.5 11.34 6.5 14V16H22.5V14C22.5 11.34 17.17 10 14.5 10Z" fill="#9873FF"/>
+          </svg>
+          Добавить клиента
+        </button>
+
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

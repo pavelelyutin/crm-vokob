@@ -28,7 +28,7 @@
   font-display: swap;
 }
 
-/* global */
+/* ----- global ----- */
 :root {
   --purple: #9873ff;
   --purple-secondary: #B89EFF;
@@ -71,7 +71,7 @@ body {
   display: flex;
 }
 
-/* header */
+/* ----- header ----- */
 .header {
   margin-bottom: 40px;
   padding: 20px 0;
@@ -111,7 +111,7 @@ body {
   color: var(--gray);
 }
 
-/* clients */
+/* ----- clients ----- */
 .clients__container {
   max-width: 1226px;
   margin: 0 auto;
@@ -191,8 +191,94 @@ body {
   color: var(--gray);
 }
 
+.tbody__td--contacts {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 60px;
+  width: 120px;
+}
+
+.table-contacts-link {
+  width: 16px;
+  margin-right: 7px;
+  height: 16px;
+  cursor: pointer;
+  opacity: .8;
+  transition: all .2s ease-in-out;
+}
+
+.table-contacts-link:hover {
+  opacity: 1;
+}
+
+
+.table-contacts-link_more {
+  padding: 1px 3px 1px 1px;
+  font-weight: 600;
+  font-size: 8px;
+  line-height: 11px;
+  border: 1px solid var(--main-purple);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.tbody__td--contacts>.table-contacts-link:last-child,
+.tbody__td--contacts>.table-contacts-link:nth-child(5) {
+  margin-right: 0;
+}
+
 .tbody__td--actions {
   padding-right: 20px;
+}
+
+.btn__change-client {
+  display: inline-block;
+  margin-right: 30px;
+  transition: all .2s ease;
+}
+
+.btn__change-client svg {
+  vertical-align: bottom;
+}
+
+.btn__change-client.is-animated {
+  color: var(--purple);
+}
+
+.btn__change-client:hover{
+  color: var(--purple);
+}
+
+.btn__delete-client {
+  display: inline-block;
+  margin-left: auto;
+  transition: all .2s ease;
+}
+
+.btn__delete-client:hover {
+  color: var(--red);
+}
+
+.btn__delete-client svg {
+  vertical-align: sub;
+}
+
+@keyframes preload {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn__change-client svg {
+  vertical-align: top;
+}
+
+.table-preload svg,
+.btn__change-client.is-animated svg,
+.save-btn svg {
+  animation: preload 2s infinite linear;
 }
 
 /* btn add client */
@@ -222,4 +308,323 @@ body {
 
 .btn__icon {
   vertical-align: bottom;
+}
+
+/* ----- modal new client ----- */
+.new-client {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .4s ease;
+  z-index: 10;
+}
+
+.new-client.modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.new-client__modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  min-height: 396px;
+  max-height: 90%;
+  padding: 25px 30px;
+  overflow-y: auto;
+  background-color: var(--white);
+  opacity: 0;
+  transform: perspective(600px) translate(0px, -100%) rotateX(60deg);
+  transition: all .4s ease;
+  z-index: 100;
+}
+
+.new-client__modal.modal-open {
+  transform: perspective(600px) translate(0px, -0%) rotateX(0deg);
+  opacity: 1;
+}
+
+.new-client__title {
+  align-self: flex-start;
+  margin: 0;
+  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+/* form */
+#client__form {
+  width: 100%;
+}
+
+.new-client__label {
+  display: block;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.form__input {
+  display: block;
+  width: 100%;
+  margin-bottom: 32px;
+  padding-bottom: 4px;
+  height: 1px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  border: none;
+  border-bottom: 1px solid rgba(200, 197, 209, 0.5);
+  transition: all .2s ease;
+}
+
+.form__input.error {
+  border-color: var(--red);
+}
+
+.form__input.is-active,
+.form__input:focus {
+  height: 27px;
+}
+
+.form__input:focus-visible {
+  outline: none;
+}
+
+#form__input--surname {
+  margin-bottom: 24px;
+}
+
+.form-input-error {
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--red);
+  text-align: right;
+}
+
+.add-contact {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 8px 30px;
+  margin: 0 -30px;
+  margin-bottom: 24px;
+  background-color: rgba(200, 197, 209, 0.2);
+}
+
+.add-contact.is-open {
+  padding: 25px 30px;
+}
+
+.add-contact__btn {
+  display: inline-block;
+  margin: 0 auto;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s ease-in-out;
+}
+
+.add-contact__btn svg {
+  vertical-align: -10%;
+  transition: all .2s ease-in-out;
+}
+
+.add-contact__btn:hover{
+  color: var(--purple);
+}
+
+.add-contact__btn:active{
+  color: #8052FF;
+}
+
+.new-contact {
+  display: flex;
+  margin-bottom: 15px;
+  height: 37px;
+}
+
+.new-client__exit-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.new-client__exit-btn svg path {
+  transition: all .2s ease;
+}
+
+.new-client__exit-btn:hover svg path {
+  fill: var(--purple);
+}
+
+.new-client__exit-btn:active svg path {
+  fill: #8052FF;
+}
+
+/* select */
+.select__toggle {
+  padding: 5px 8px 5px 12px;
+  height: 100%;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  background-color: #E7E5EB;
+  border: 1px solid #C8C5D1;
+  border-radius: 0;
+}
+
+.select__toggle::after {
+  background-image: url('../img/arrow_back.svg');
+}
+
+.select__dropdown {
+  top: 37px;
+  font-size: 12px;
+  line-height: 16px;
+  background-color: #F4F3F6;
+  border: 1px solid #C8C5D1;
+  border-top: none;
+  border-radius: 0;
+}
+
+.select__option_selected {
+  background-color: inherit;
+}
+
+.select__option_selected::after {
+  background-image: none;
+}
+
+.select__option:hover {
+  background-color: #E7E5EB;
+}
+
+/* input */
+.new-contact__input {
+  width: 240px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 19px;
+  border: 1px solid #C8C5D1;
+  border-left: none;
+  border-right: none;
+}
+
+.new-contact__input::placeholder {
+  color: var(--gray);
+}
+
+.new-contact__input:focus-visible {
+  outline: none;
+}
+
+/* btn new contact */
+.new-contact__btn {
+  display: inline-block;
+  padding: 10px 7px;
+  background-color: #E7E5EB;
+  border: 1px solid #C8C5D1;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.new-contact__btn svg path {
+  transition: all .3s ease;
+}
+
+.new-contact__btn:hover {
+  border-color: var(--red);
+}
+
+.new-contact__btn:hover svg path {
+  fill: var(--red);
+}
+
+.error-server {
+  display: block;
+  margin: 0;
+  margin-bottom: 9px;
+  max-width: 100px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--red);
+  text-align: center;
+}
+
+.error-server.is-hidden {
+  display: none;
+}
+
+.save-btn {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  padding: 12px 35px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--white);
+  background-color: var(--purple);
+  transition: all .2s ease-in-out;
+}
+
+.save-btn:hover,
+.delete-box__delete-btn:hover  {
+  background-color: #B89EFF;
+}
+
+.save-btn:active,
+.delete-box__delete-btn:active  {
+  background-color: #8052FF;
+}
+
+.cancel-btn {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.cancel-btn:hover {
+  color: var(--purple);
+}
+
+.cansel-btn.is-hidden,
+.new-client-form__delete-btn.is-hidden {
+  display: none;
+}
+
+.new-client__delete-btn {
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.new-client_delete-btn:hover {
+  color: var(--main-purple);
+}
+
+.is-hidden {
+  display: none;
 }

@@ -465,8 +465,11 @@ body {
 .add-contact__btn {
   display: inline-block;
   margin: 0 auto;
-  cursor: pointer;
   text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  cursor: pointer;
   transition: all .2s ease-in-out;
 }
 
@@ -656,6 +659,88 @@ body {
 
 .new-client_delete-btn:hover {
   color: var(--main-purple);
+}
+
+/* Окно удаления клиента */
+.delete-box {
+  position: absolute;
+  top: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  width: 450px;
+  max-height: 215px;
+  background-color: #fff;
+  opacity: 0;
+  /* transform: scale(0, 0); */
+  transform: perspective(600px) translate(0px, -100%) rotateX(60deg);
+  transition: all .4s ease;
+  z-index: 1000;
+}
+
+.delete-box.modal-open {
+  opacity: 1;
+  transform: perspective(600px) translate(0px, -0%) rotateX(0deg);
+}
+
+.delete-box__title {
+  margin: 0;
+  margin-bottom: 11px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.delete-box__descr {
+  margin: 0;
+  margin-bottom: 25px;
+  max-width: 275px;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+}
+
+.delete-box__delete-btn {
+  padding: 12px 35px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #fff;
+  background-color: var(--purple);
+  transition: all .3s ease;
+}
+
+.delete-box__cancel-btn {
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: underline;
+  transition: all .3s ease;
+}
+
+.delete-box__cancel-btn:hover {
+  color: var(--purple);
+}
+
+.exit-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.exit-btn svg path {
+  transition: all .3s ease;
+}
+
+.exit-btn:hover svg path {
+  fill: var(--purple);
+}
+
+.exit-btn:active svg path {
+  fill: #8052FF;
 }
 
 

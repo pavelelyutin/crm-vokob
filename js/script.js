@@ -278,23 +278,22 @@ document.addEventListener('DOMContentLoaded', async function () {
     newClientModal.append(exitBtn);
     newClientModal.append(deleteBtn);
 
-
   }
   newClientModal();
 
-  // Открытие окна удаления клиента
+  // ---------- Открытие окна удаления клиента
   // function deleteModalOpen() {
   //   document.querySelector('.new-client').classList.add('modal-open');
   //   document.querySelector('.delete-box').classList.add('modal-open');
   // }
 
-  // Открытие окна удаления внутри модального окна с клиентом
+  // ---------- Открытие окна удаления внутри модального окна с клиентом
   // function deleteModalOpenInside() {
   //   document.querySelector('.new-client').classList.remove('modal-open');
   //   document.querySelector('.delete-box').classList.add('modal-open');
   // }
 
-  // Закрытие окна удаления клиента
+  // ---------- Закрытие окна удаления клиента
   // function deleteModalClose(inOrOut) {
   //   let cancelBtn = document.querySelector('.delete-box__cancel-btn')
   //   let exitBtn = document.querySelector('.exit-btn')
@@ -331,7 +330,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // }
 
-  // Модальное окно редактирования клиента
+  // ---------- Модальное окно редактирования клиента
   // async function changeClientModal(id) {
   //   let response = await fetch(`http://localhost:3000/api/clients/${id}`)
   //   if (!response.ok) {
@@ -505,37 +504,37 @@ document.addEventListener('DOMContentLoaded', async function () {
   //   }
   // }
 
-  // Отправка данных нового клиента на сервер
+  // ---------- Отправка данных нового клиента на сервер
   async function newClientSubmit() {
 
-    // document.getElementById('new-client__form').querySelectorAll('input').forEach((el) => {
-    //   el.setAttribute('disabled', 'true')
-    // })
+    document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+      el.setAttribute('disabled', 'true')
+    })
 
     let client = {};
 
     client.lastName = '';
 
-    // document.querySelectorAll('.form-input-error').forEach((el) => {
-    //   el.remove();
-    // });
-    // document.querySelectorAll('.new-contact-error').forEach((el) => {
-    //   el.classList.remove('new-contact-error');
-    // });
-    // if (document.querySelector('.error')) {
-    //   document.querySelectorAll('.error').forEach((el) => {
-    //     el.classList.remove('error')
-    //   })
-    // }
+    document.querySelectorAll('.form-input-error').forEach((el) => {
+      el.remove();
+    });
+    document.querySelectorAll('.new-contact-error').forEach((el) => {
+      el.classList.remove('new-contact-error');
+    });
+    if (document.querySelector('.error')) {
+      document.querySelectorAll('.error').forEach((el) => {
+        el.classList.remove('error')
+      })
+    }
 
-    // validation();
+    validation();
 
-    // if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
-    //   document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
-    //     el.removeAttribute('disabled')
-    //   })
-    //   return
-    // }
+    if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
+      document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+        el.removeAttribute('disabled')
+      })
+      return
+    }
 
     let saveBtn = document.querySelector('.save-btn');
 
@@ -551,7 +550,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     let correctNameClient = nameClient[0].toLocaleUpperCase() + nameClient.slice(1);
     if (lastnameClient != '') {
       let correctLastnameClient = lastnameClient[0].toLocaleUpperCase() + lastnameClient.slice(1);
-      client.lastname = `${correctLastnameClient}`;
+      client.lastName = `${correctLastnameClient}`;
     }
     client.name = `${correctNameClient}`;
     client.surname = `${correctSurnameClient}`;
@@ -874,65 +873,65 @@ document.addEventListener('DOMContentLoaded', async function () {
   // }
 
   // ---------- Валидация формы
-  // function validation() {
-  //   const surnameInputValid = document.getElementById('new-client-surname')
-  //   const labelForSurnameValid = document.querySelector('.label-for-surname')
-  //   if (surnameInputValid.value.trim().length === 0) {
-  //     let surnameError = document.createElement('span');
-  //     surnameError.textContent = 'Введите фамилию';
-  //     surnameError.classList.add('form-input-error')
-  //     labelForSurnameValid.appendChild(surnameError);
-  //     surnameInputValid.classList.add('error')
-  //   }
-  //   if (surnameInputValid.value.search(/\d|^A-Za-zА-Яа-я/) != -1) {
-  //     let surnameError = document.createElement('span');
-  //     surnameError.textContent = 'введена некорректно';
-  //     surnameError.classList.add('form-input-error')
-  //     labelForSurnameValid.appendChild(surnameError);
-  //     surnameInputValid.classList.add('error')
-  //   };
-  //   const nameInputValid = document.getElementById('new-client-name')
-  //   const labelForNameValid = document.querySelector('.label-for-name')
-  //   if (nameInputValid.value.trim().length === 0) {
-  //     let nameError = document.createElement('span');
-  //     nameError.textContent = 'введите имя';
-  //     nameError.classList.add('form-input-error');
-  //     labelForNameValid.appendChild(nameError);
-  //     nameInputValid.classList.add('error')
-  //   };
-  //   if (nameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
-  //     let nameError = document.createElement('span');
-  //     nameError.textContent = 'введено некорректно';
-  //     nameError.classList.add('form-input-error')
-  //     labelForNameValid.appendChild(nameError);
-  //     nameInputValid.classList.add('error')
-  //   };
-  //   const lastNameInputValid = document.getElementById('new-client-last-name')
-  //   const labelForLastNameValid = document.querySelector('.label-for-last-name')
-  //   if (lastNameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
-  //     let lastNameError = document.createElement('span');
-  //     lastNameError.textContent = ' введено некорректно';
-  //     lastNameError.classList.add('form-input-error')
-  //     labelForLastNameValid.appendChild(lastNameError);
-  //     lastNameInputValid.classList.add('error')
-  //   };
-  //   if (document.querySelector('.new-contact')) {
-  //     document.querySelectorAll('.new-contact').forEach((oneContact) => {
-  //       const newSelect = oneContact.querySelector('button')
-  //       const selectAttr = newSelect.getAttribute('value')
-  //       const oneContactInput = oneContact.querySelector('input')
-  //       if (selectAttr === 'tel') {
-  //         if (oneContactInput.value.replace(/[^+\d]/g, '').length < 12) {
-  //           oneContactInput.classList.add('new-contact-error');
-  //         };
-  //       } else {
-  //         if (oneContactInput.value.trim().length === 0) {
-  //           oneContactInput.classList.add('new-contact-error');
-  //         }
-  //       }
-  //     })
-  //   }
-  // }
+  function validation() {
+    const surnameInputValid = document.getElementById('form__input--surname')
+    const labelForSurnameValid = document.querySelector('.new-client__label--surname')
+    if (surnameInputValid.value.trim().length === 0) {
+      let surnameError = document.createElement('span');
+      surnameError.textContent = 'Введите фамилию';
+      surnameError.classList.add('form-input-error')
+      labelForSurnameValid.appendChild(surnameError);
+      surnameInputValid.classList.add('error')
+    }
+    if (surnameInputValid.value.search(/\d|^A-Za-zА-Яа-я/) != -1) {
+      let surnameError = document.createElement('span');
+      surnameError.textContent = 'введена некорректно';
+      surnameError.classList.add('form-input-error')
+      labelForSurnameValid.appendChild(surnameError);
+      surnameInputValid.classList.add('error')
+    };
+    const nameInputValid = document.getElementById('form__input--name')
+    const labelForNameValid = document.querySelector('.new-client__label--name')
+    if (nameInputValid.value.trim().length === 0) {
+      let nameError = document.createElement('span');
+      nameError.textContent = 'введите имя';
+      nameError.classList.add('form-input-error');
+      labelForNameValid.appendChild(nameError);
+      nameInputValid.classList.add('error')
+    };
+    if (nameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
+      let nameError = document.createElement('span');
+      nameError.textContent = 'введено некорректно';
+      nameError.classList.add('form-input-error')
+      labelForNameValid.appendChild(nameError);
+      nameInputValid.classList.add('error')
+    };
+    const lastNameInputValid = document.getElementById('form__input--lastname')
+    const labelForLastNameValid = document.querySelector('.new-client__label--lastname')
+    if (lastNameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
+      let lastNameError = document.createElement('span');
+      lastNameError.textContent = ' введено некорректно';
+      lastNameError.classList.add('form-input-error')
+      labelForLastNameValid.appendChild(lastNameError);
+      lastNameInputValid.classList.add('error')
+    };
+    if (document.querySelector('.new-contact')) {
+      document.querySelectorAll('.new-contact').forEach((oneContact) => {
+        const newSelect = oneContact.querySelector('button')
+        const selectAttr = newSelect.getAttribute('value')
+        const oneContactInput = oneContact.querySelector('input')
+        if (selectAttr === 'tel') {
+          if (oneContactInput.value.replace(/[^+\d]/g, '').length < 12) {
+            oneContactInput.classList.add('new-contact-error');
+          };
+        } else {
+          if (oneContactInput.value.trim().length === 0) {
+            oneContactInput.classList.add('new-contact-error');
+          }
+        }
+      })
+    }
+  }
 
   // ---------- Создание таблицы
   function createTable(array) {
@@ -1122,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         tbodyRow.append(cellContacts);
 
-        cellContacts.querySelector('.contacts-link--more').addEventListener('click', (e) => {
+        cellContacts.querySelector('.contacts__link--more').addEventListener('click', (e) => {
           e.preventDefault();
 
           for (let sibling of e.target.parentNode.children) {
@@ -1255,38 +1254,41 @@ document.addEventListener('DOMContentLoaded', async function () {
   //   modalClose();
   // });
 
-  // Индикатор загрузки таблицы
-  // function preloadTable() {
-  //   const preloaderTable = document.createElement('tr');
+  // ---------- Индикатор загрузки таблицы
+  function preloadTable() {
+    const preloaderRow = document.createElement('tr');
+    const preloaderTable = document.createElement('td');
+    preloaderTable.colSpan = '6';
 
-  //   preloaderTable.classList.add('table-preload');
+    preloaderTable.classList.add('table-preload');
 
-  //   preloaderTable.innerHTML = `<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  //     <g clip-path="url(#clip0_121_2401)">
-  //     <path d="M14.0002 50.0005C14.0002 69.8825 30.1182 86.0005 50.0002 86.0005C69.8822 86.0005 86.0002 69.8825 86.0002 50.0005C86.0002 30.1185 69.8823 14.0005 50.0003 14.0005C45.3513 14.0005 40.9082 14.8815 36.8282 16.4865" stroke="#9873FF" stroke-width="8" stroke-miterlimit="10" stroke-linecap="round"/>
-  //     </g>
-  //     <defs>
-  //     <clipPath id="clip0_121_2401">
-  //     <rect width="100" height="100" fill="white"/>
-  //     </clipPath>
-  //     </defs>
-  //     </svg>`;
-  //   document.querySelector('.clients').append(preloaderTable);
-  // }
+    preloaderTable.innerHTML = `<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_121_2401)">
+      <path d="M14.0002 50.0005C14.0002 69.8825 30.1182 86.0005 50.0002 86.0005C69.8822 86.0005 86.0002 69.8825 86.0002 50.0005C86.0002 30.1185 69.8823 14.0005 50.0003 14.0005C45.3513 14.0005 40.9082 14.8815 36.8282 16.4865" stroke="#9873FF" stroke-width="8" stroke-miterlimit="10" stroke-linecap="round"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_121_2401">
+      <rect width="100" height="100" fill="white"/>
+      </clipPath>
+      </defs>
+      </svg>`;
+    document.querySelector('.table__tbody').append(preloaderRow);
+    preloaderRow.append(preloaderTable);
+  }
 
-  // Сортировка Up
-  // function sortUp(field) {
-  //   let sortedClients = clients.sort((a, b) => (a[field] >= b[field] ? 1 : -1))
-  //   createTable(sortedClients)
-  // }
+  // ---------- Сортировка Up
+  function sortUp(field) {
+    let sortedClients = clients.sort((a, b) => (a[field] >= b[field] ? 1 : -1))
+    createTable(sortedClients)
+  }
 
-  // Сортровка Down
-  // function sortDown(field) {
-  //   let sortedClients = clients.sort((a, b) => (a[field] < b[field] ? 1 : -1))
-  //   createTable(sortedClients)
-  // }
+  // ---------- Сортровка Down
+  function sortDown(field) {
+    let sortedClients = clients.sort((a, b) => (a[field] < b[field] ? 1 : -1))
+    createTable(sortedClients)
+  }
 
-  // Окно подтверждения удаления клиента
+  // ---------- Окно подтверждения удаления клиента
   // function deleteClient() {
   //   const deleteBox = document.createElement('div')
   //   deleteBox.classList.add('delete-box')
@@ -1316,88 +1318,92 @@ document.addEventListener('DOMContentLoaded', async function () {
   // }
   // deleteClient();
 
-  // Загрузка страницы с таблицей клиентов
-  // async function loadTable(sortVar, field) {
-  //   if (!document.querySelector('.tbody__row')) {
-  //     document.querySelector('.btn_add-client').classList.add('is-hidden')
-  //     preloadTable();
-  //   } else {
-  //     document.querySelectorAll('.tbody__row').forEach((el) => {
-  //       el.remove()
-  //     })
-  //   }
+  // ---------- Загрузка страницы с таблицей клиентов
+  async function loadTable(sortVar, field) {
+    if (!document.querySelector('.tbody__row')) {
+      document.querySelector('.btn__add-client').classList.add('is-hidden');
+      preloadTable();
+    } else {
+      document.querySelectorAll('.tbody__row').forEach((el) => {
+        el.remove();
+      })
+    }
 
-  //   const response = await fetch('http://localhost:3000/api/clients');
+    const response = await fetch(SERVER_URL + '/api/clients');
 
-  //   const clientsFromServer = await response.json();
+    const clientsFromServer = await response.json();
 
-  //   clients = [];
+    clients = [];
 
-  //   for (const client of clientsFromServer) {
-  //     clients.push(client);
-  //   }
+    for (const client of clientsFromServer) {
+      clients.push(client);
+    }
 
-  //   if (sortVar === 'up') {
-  //     sortUp(field)
-  //   } else if (sortVar === 'down') {
-  //     sortDown(field)
-  //   }
+    if (sortVar === 'up') {
+      sortUp(field)
+    } else if (sortVar === 'down') {
+      sortDown(field)
+    }
 
-  //   if (document.querySelector('.table-preload')) {
-  //     document.querySelector('.table-preload').remove()
-  //   }
+    if (document.querySelector('.table-preload')) {
+      document.querySelector('.table-preload').remove();
+    }
 
-  //   document.querySelector('.btn__add-client').classList.remove('is-hidden');
-  // }
-  // await loadTable('up', 'id');
+    document.querySelector('.btn__add-client').classList.remove('is-hidden');
+  }
+  await loadTable('up', 'id');
 
   // ---------- Сортировка по id, дате создания и изменения
-  // function sotrByField(classname, field) {
+  function sotrByField(classname, field) {
 
-  //   document.querySelector(classname).addEventListener('click', () => {
-  //     if (!document.querySelector('.tbody__row')) {
-  //       document.querySelector('.btn__add-client').classList.add('is-hidden')
-  //       preloadTable();
-  //     } else {
-  //       document.querySelectorAll('.tbody__row').forEach((el) => {
-  //         el.remove()
-  //       })
-  //     }
-  //     document.querySelector(classname).classList.toggle('sort-down')
-  //     if (document.querySelector(classname + '.sort-down')) {
-  //       sortDown(field)
-  //     } else {
-  //       sortUp(field)
-  //     }
-  //   })
-  // }
+    document.querySelector(classname).addEventListener('click', () => {
 
-  // sotrByField('.thead__th--id', 'id');
-  // sotrByField('.thead__th--create', 'createdAt');
-  // sotrByField('.thead__th--change', 'updatedAt');
+      if (!document.querySelector('.tbody__row')) {
+        document.querySelector('.btn__add-client').classList.add('is-hidden');
+        preloadTable();
+      } else {
+        document.querySelectorAll('.tbody__row').forEach((el) => {
+          el.remove()
+        })
+      }
+
+      document.querySelector(classname).classList.toggle('sort-down');
+      document.querySelector(classname).classList.add('is-color');
+
+      if (document.querySelector(classname + '.sort-down')) {
+        sortDown(field)
+      } else {
+        sortUp(field)
+      }
+    })
+  }
+
+  sotrByField('.thead__th--id', 'id');
+  sotrByField('.thead__th--create', 'createdAt');
+  sotrByField('.thead__th--change', 'updatedAt');
 
   // ---------- Сортировка по имени
-  // document.querySelector('.thead__th--name').addEventListener('click', () => {
+  document.querySelector('.thead__th--name').addEventListener('click', () => {
 
-  //   if (!document.querySelector('.tbody__row')) {
-  //     document.querySelector('.btn__add-client').classList.add('is-hidden');
-  //     preloadTable();
-  //   } else {
-  //     document.querySelectorAll('.tbody__row').forEach((el) => {
-  //       el.remove()
-  //     })
-  //   }
+    if (!document.querySelector('.tbody__row')) {
+      document.querySelector('.btn__add-client').classList.add('is-hidden');
+      preloadTable();
+    } else {
+      document.querySelectorAll('.tbody__row').forEach((el) => {
+        el.remove()
+      })
+    }
 
-  //   document.querySelector('.thead__th--name').classList.toggle('sort-down');
+    document.querySelector('.thead__th--name').classList.toggle('sort-down');
 
-  //   if (document.querySelector('.thead__th--name.sort-down')) {
-  //     let sortedClients = clients.sort((a, b) => ((a['surname'] + ' ' + a['name'] + ' ' + a['lastName']) < (b['surname'] + ' ' + b['name'] + ' ' + b['lastName'])) ? 1 : -1);
-  //     createTable(sortedClients)
-  //   } else {
-  //     let sortedClients = clients.sort((a, b) => ((a['surname'] + ' ' + a['name'] + ' ' + a['lastName']) > (b['surname'] + ' ' + b['name'] + ' ' + b['lastName'])) ? 1 : -1);
-  //     createTable(sortedClients)
-  //   }
-  // })
+    if (document.querySelector('.thead__th--name.sort-down')) {
+      let sortedClients = clients.sort((a, b) => ((a['surname'] + ' ' + a['name'] + ' ' + a['lastName']) < (b['surname'] + ' ' + b['name'] + ' ' + b['lastName'])) ? 1 : -1);
+      createTable(sortedClients)
+    } else {
+      let sortedClients = clients.sort((a, b) => ((a['surname'] + ' ' + a['name'] + ' ' + a['lastName']) > (b['surname'] + ' ' + b['name'] + ' ' + b['lastName'])) ? 1 : -1);
+      createTable(sortedClients)
+    }
+  })
 
   // ---------- Поиск с автозаполнением
   // function autocomplete() {
@@ -1518,7 +1524,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   // autocomplete();
 
   // document.addEventListener('click', (e) => {
-  //   const target = e.target
+  //   const target = e.target;
   //   if (!target.closest('.header__input') && !target.closest('.autocomplete-item')) {
   //     if (document.querySelector('.in-search')) {
   //       document.querySelector('.in-search').classList.remove('in-search')
@@ -1527,7 +1533,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // })
 
-  // ---------- Закрытие модалки по клику по фону + кнопка сохранить и удалить контакт
+  //---------- Закрытие модалки по клику по фону + кнопка сохранить и удалить контакт
   // document.querySelector('.new-client__modal').addEventListener('click', (e) => {
   //   e.preventDefault()
   //   const target = e.target;
@@ -1574,6 +1580,5 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   //   }
   // })
-
 
 });

@@ -71,6 +71,7 @@ body {
   display: flex;
 }
 
+
 /* ----- header ----- */
 .header {
   margin-bottom: 40px;
@@ -200,32 +201,30 @@ body {
   width: 120px;
 }
 
-.table-contacts-link {
+.contacts__link {
   width: 16px;
-  margin-right: 7px;
   height: 16px;
+  margin-right: 7px;
   cursor: pointer;
   opacity: .8;
   transition: all .2s ease-in-out;
 }
 
-.table-contacts-link:hover {
+.contacts__link:hover {
   opacity: 1;
 }
 
-
-.table-contacts-link_more {
-  padding: 1px 3px 1px 1px;
+.contacts__link--more {
+  border: 1px solid var(--purple);
+  border-radius: 50%;
+  padding: 3px 3px 3px 3px;
   font-weight: 600;
   font-size: 8px;
-  line-height: 11px;
-  border: 1px solid var(--main-purple);
-  border-radius: 10px;
+  line-height: 9px;
   cursor: pointer;
 }
 
-.tbody__td--contacts>.table-contacts-link:last-child,
-.tbody__td--contacts>.table-contacts-link:nth-child(5) {
+.tbody__td--contacts>.contacts__link:nth-child(5n) {
   margin-right: 0;
 }
 
@@ -247,6 +246,11 @@ body {
   color: var(--purple);
 }
 
+.btn__change-client:focus {
+  outline: none;
+  color: var(--purple);;
+}
+
 .btn__change-client:hover{
   color: var(--purple);
 }
@@ -257,12 +261,31 @@ body {
   transition: all .2s ease;
 }
 
+.btn__delete-client:focus {
+  outline: none;
+  color: var(--red);
+}
+
 .btn__delete-client:hover {
   color: var(--red);
 }
 
 .btn__delete-client svg {
-  vertical-align: sub;
+  vertical-align: bottom;
+}
+
+.table-preload {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  width: 100%;
+  height: 300px;
+  background-color: #fff;
+}
+
+.table-preload svg {
+  display: block;
+  margin: 0 auto;
 }
 
 @keyframes preload {
@@ -295,6 +318,16 @@ body {
 
 .btn__add-client path {
   transition: fill .2s ease-in-out;
+}
+
+.btn__add-client:focus {
+  outline: none;
+  color: var(--white);
+  background-color: var(--purple-secondary);
+}
+
+.btn__add-client:focus path {
+  fill: var(--white);
 }
 
 .btn__add-client:hover {
@@ -625,6 +658,15 @@ body {
   color: var(--main-purple);
 }
 
+
 .is-hidden {
   display: none;
+}
+
+.is-color {
+  color: var(--purple);
+}
+
+.sort-down svg {
+  transform: rotate(180deg);
 }

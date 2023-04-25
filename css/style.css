@@ -71,6 +71,23 @@ body {
   display: flex;
 }
 
+.table-preload {
+  width: 100%;
+  height: 300px;
+  background-color: #fff;
+}
+
+.table-preload svg {
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes preload {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 /* ----- header ----- */
 .header {
@@ -85,6 +102,31 @@ body {
   max-width: 1366px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.header__logo {
+  margin-right: 53px;
+}
+
+.header__logo:focus {
+  outline: none;
+}
+
+.header__input {
+  width: 581px;
+  padding: 13px 16px;
+  border: 1px solid rgba(51, 51, 51, 0.2);
+}
+
+.header__input:focus {
+  outline: none;
+  border: 1px solid var(--purple)
+}
+
+.header__input::placeholder {
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--gray);
 }
 
 .header__autocomplete {
@@ -112,31 +154,6 @@ body {
 .autocomplete-active {
   background-color: DodgerBlue !important;
   color: #ffffff;
-}
-
-.header__logo {
-  margin-right: 53px;
-}
-
-.header__logo:focus {
-  outline: none;
-}
-
-.header__input {
-  width: 581px;
-  padding: 13px 16px;
-  border: 1px solid rgba(51, 51, 51, 0.2);
-}
-
-.header__input:focus {
-  outline: none;
-  border: 1px solid var(--purple)
-}
-
-.header__input::placeholder {
-  font-size: 14px;
-  line-height: 19px;
-  color: var(--gray);
 }
 
 /* ----- clients ----- */
@@ -274,10 +291,6 @@ body {
   transition: all .2s ease;
 }
 
-.btn__change-client svg {
-  vertical-align: bottom;
-}
-
 .btn__change-client.is-animated {
   color: var(--purple);
 }
@@ -289,6 +302,10 @@ body {
 
 .btn__change-client:hover{
   color: var(--purple);
+}
+
+.btn__change-client svg {
+  vertical-align: top;
 }
 
 .btn__delete-client {
@@ -307,30 +324,6 @@ body {
 }
 
 .btn__delete-client svg {
-  vertical-align: bottom;
-}
-
-.table-preload {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  width: 100%;
-  height: 300px;
-  background-color: #fff;
-}
-
-.table-preload svg {
-  display: block;
-  margin: 0 auto;
-}
-
-@keyframes preload {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.btn__change-client svg {
   vertical-align: top;
 }
 
@@ -414,13 +407,13 @@ body {
   overflow-y: auto;
   background-color: var(--white);
   opacity: 0;
-  transform: perspective(600px) translate(0px, -100%) rotateX(60deg);
+  transform: scale(0);
   transition: all .4s ease;
   z-index: 100;
 }
 
 .new-client__modal.modal-open {
-  transform: perspective(600px) translate(0px, -0%) rotateX(0deg);
+  transform: none;
   opacity: 1;
 }
 
@@ -441,7 +434,7 @@ body {
 }
 
 /* form */
-#client__form {
+.new-client__form {
   width: 100%;
 }
 
@@ -481,11 +474,11 @@ body {
   outline: none;
 }
 
-#form__input--surname {
+.form__input--surname {
   margin-bottom: 24px;
 }
 
-.form-input-error {
+.form__error {
   position: absolute;
   top: 0;
   right: 0;
@@ -600,12 +593,12 @@ body {
 /* input */
 .new-contact__input {
   width: 240px;
-  padding: 8px 12px;
-  font-size: 14px;
-  line-height: 19px;
   border: 1px solid #C8C5D1;
   border-left: none;
   border-right: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 19px;
 }
 
 .new-contact__input::placeholder {
@@ -617,7 +610,7 @@ body {
 }
 
 /* btn new contact */
-.new-contact__btn {
+.btn__new-contact {
   display: inline-block;
   padding: 10px 7px;
   background-color: #E7E5EB;
@@ -626,18 +619,19 @@ body {
   transition: all .3s ease;
 }
 
-.new-contact__btn svg path {
+.btn__new-contact svg path {
   transition: all .3s ease;
 }
 
-.new-contact__btn:hover {
+.btn__new-contact:hover {
   border-color: var(--red);
 }
 
-.new-contact__btn:hover svg path {
+.btn__new-contact:hover svg path {
   fill: var(--red);
 }
 
+/* Ошибка сервера */
 .error-server {
   display: block;
   margin: 0;
@@ -653,6 +647,7 @@ body {
   display: none;
 }
 
+/* Кнопка сохранить клиента*/
 .save-btn {
   display: block;
   margin: 0 auto;
@@ -667,21 +662,22 @@ body {
 }
 
 .save-btn:focus-visible,
-.delete-box__delete-btn:focus-visible {
+.delete-modal__delete-btn:focus-visible {
   outline: none;
   background-color: #B89EFF;
 }
 
 .save-btn:hover,
-.delete-box__delete-btn:hover  {
+.delete-modal__delete-btn:hover  {
   background-color: #B89EFF;
 }
 
 .save-btn:active,
-.delete-box__delete-btn:active  {
+.delete-modal__delete-btn:active  {
   background-color: #8052FF;
 }
 
+/* Кнопка отмена */
 .cancel-btn {
   display: inline-block;
   margin: 0 auto;
@@ -701,6 +697,7 @@ body {
   display: none;
 }
 
+/* Кнопка удалить клиента  */
 .new-client__delete-btn {
   font-size: 12px;
   line-height: 16px;
@@ -710,16 +707,17 @@ body {
   transition: all .2s ease;
 }
 
-.new-client_delete-btn:hover {
-  color: var(--main-purple);
+.new-client__delete-btn:hover {
+  color: var(--purple);
 }
 
-.new-contact-error {
+/* Ошибка при добавлении контакта */
+.new-contact__error {
   background-color: rgba(253, 1, 1, 0.1);
 }
 
 /* Окно удаления клиента */
-.delete-box {
+.delete-modal {
   position: absolute;
   top: 40vh;
   display: flex;
@@ -730,18 +728,17 @@ body {
   max-height: 215px;
   background-color: #fff;
   opacity: 0;
-  /* transform: scale(0, 0); */
-  transform: scale(0, 0);
+  transform: scale(0);
   transition: all .4s ease;
   z-index: 1000;
 }
 
-.delete-box.modal-open {
+.delete-modal.modal-open {
   opacity: 1;
   transform: none;
 }
 
-.delete-box__title {
+.delete-modal__title {
   margin: 0;
   margin-bottom: 11px;
   font-weight: 700;
@@ -749,7 +746,7 @@ body {
   line-height: 25px;
 }
 
-.delete-box__descr {
+.delete-modal__descr {
   margin: 0;
   margin-bottom: 25px;
   max-width: 275px;
@@ -758,7 +755,7 @@ body {
   text-align: center;
 }
 
-.delete-box__delete-btn {
+.delete-modal__delete-btn {
   padding: 12px 35px;
   margin-bottom: 5px;
   font-weight: 600;
@@ -769,17 +766,18 @@ body {
   transition: all .3s ease;
 }
 
-.delete-box__cancel-btn {
+.delete-modal__cancel-btn {
   font-size: 12px;
   line-height: 16px;
   text-decoration: underline;
   transition: all .3s ease;
 }
 
-.delete-box__cancel-btn:hover {
+.delete-modal__cancel-btn:hover {
   color: var(--purple);
 }
 
+/* Крестик на модальном окне */
 .exit-btn {
   position: absolute;
   top: 15px;
@@ -800,6 +798,7 @@ body {
   fill: #8052FF;
 }
 
+/* Дополнительные классы */
 
 .is-hidden {
   display: none;

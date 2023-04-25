@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     e.preventDefault();
 
-    if (document.querySelector('.form-input-error')) {
-      document.querySelectorAll('.form-input-error').forEach((el) => {
+    if (document.querySelector('.form__error')) {
+      document.querySelectorAll('.form__error').forEach((el) => {
         el.remove();
       })
     }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     modalOpen();
 
-    document.querySelector('.new-client__form').classList.add('new-client-submit');
+    document.querySelector('.new-client__form').classList.add('new-client__submit');
 
     document.querySelectorAll('.form__input').forEach((el) => {
 
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         el.classList.add('is-active');
 
-        if (document.querySelector('.form-input-error')) {
-          e.target.previousSibling.querySelector('.form-input-error').remove()
+        if (document.querySelector('.form__error')) {
+          e.target.previousSibling.querySelector('.form__error').remove()
         }
 
         el.classList.remove('error');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       document.querySelector('.new-client__form.change-client-submit').classList.remove('change-client-submit')
     }
 
-    document.querySelector('.new-client-submit').addEventListener('submit', (e) => {
+    document.querySelector('.new-client__submit').addEventListener('submit', (e) => {
       e.preventDefault();
       newClientSubmit();
     });
@@ -192,13 +192,13 @@ document.addEventListener('DOMContentLoaded', async function () {
       newContactInput.placeholder = `Введите данные контакта`;
 
       const newContactBtnDelete = document.createElement('a');
-      newContactBtnDelete.classList.add('new-contact__btn', 'link-reset');
+      newContactBtnDelete.classList.add('btn__new-contact', 'link-reset');
       newContactBtnDelete.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z" fill="#B0B0B0"/>
           </svg>`;
 
       newContactInput.addEventListener('input', () => {
-        newContactInput.classList.remove('new-contact-error');
+        newContactInput.classList.remove('new-contact__error');
       });
 
       newContact.append(newContactSelect);
@@ -291,11 +291,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     client.lastName = '';
 
-    document.querySelectorAll('.form-input-error').forEach((el) => {
+    document.querySelectorAll('.form__error').forEach((el) => {
       el.remove();
     });
-    document.querySelectorAll('.new-contact-error').forEach((el) => {
-      el.classList.remove('new-contact-error');
+    document.querySelectorAll('.new-contact__error').forEach((el) => {
+      el.classList.remove('new-contact__error');
     });
     if (document.querySelector('.error')) {
       document.querySelectorAll('.error').forEach((el) => {
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     validation();
 
-    if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
+    if (document.querySelector('.form__error') || document.querySelector('.new-contact__error')) {
       document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
         el.removeAttribute('disabled')
       })
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     await postToServer();
 
-    document.querySelector('.new-client__form').classList.remove('new-client-submit');
+    document.querySelector('.new-client__form').classList.remove('new-client__submit');
 
 
     async function getThisClient() {
@@ -457,48 +457,48 @@ document.addEventListener('DOMContentLoaded', async function () {
   // ---------- Открытие окна удаления клиента
   function deleteModalOpen() {
     document.querySelector('.new-client').classList.add('modal-open');
-    document.querySelector('.delete-box').classList.add('modal-open');
+    document.querySelector('.delete-modal').classList.add('modal-open');
   }
 
   // ---------- Открытие окна удаления внутри модального окна с клиентом
   function deleteModalOpenInside() {
     document.querySelector('.new-client__modal').classList.remove('modal-open');
-    document.querySelector('.delete-box').classList.add('modal-open');
+    document.querySelector('.delete-modal').classList.add('modal-open');
   }
 
   // ---------- Закрытие окна удаления клиента
   function deleteModalClose(inOrOut) {
-    let cancelBtn = document.querySelector('.delete-box__cancel-btn');
+    let cancelBtn = document.querySelector('.delete-modal__cancel-btn');
     let exitBtn = document.querySelector('.exit-btn');
     cancelBtn.classList.add(inOrOut);
     exitBtn.classList.add(inOrOut);
 
     cancelBtn.addEventListener('click', () => {
       if (cancelBtn.classList.contains('outside')) {
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
         document.querySelector('.new-client').classList.remove('modal-open');
       } else if (cancelBtn.classList.contains('inside')) {
         document.querySelector('.new-client__modal').classList.add('modal-open');
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
       }
       document.querySelector('.exit-btn').classList.remove('inside')
-      document.querySelector('.delete-box__cancel-btn').classList.remove('inside')
+      document.querySelector('.delete-modal__cancel-btn').classList.remove('inside')
       document.querySelector('.exit-btn').classList.remove('outside')
-      document.querySelector('.delete-box__cancel-btn').classList.remove('outside')
+      document.querySelector('.delete-modal__cancel-btn').classList.remove('outside')
     })
 
     exitBtn.addEventListener('click', () => {
       if (exitBtn.classList.contains('outside')) {
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
         document.querySelector('.new-client').classList.remove('modal-open');
       } else if (exitBtn.classList.contains('inside')) {
         document.querySelector('.new-client__modal').classList.add('modal-open');
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
       }
       document.querySelector('.exit-btn').classList.remove('inside')
-      document.querySelector('.delete-box__cancel-btn').classList.remove('inside')
+      document.querySelector('.delete-modal__cancel-btn').classList.remove('inside')
       document.querySelector('.exit-btn').classList.remove('outside')
-      document.querySelector('.delete-box__cancel-btn').classList.remove('outside')
+      document.querySelector('.delete-modal__cancel-btn').classList.remove('outside')
     })
 
   }
@@ -532,8 +532,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       document.querySelector('.add-contact').classList.add('first-click');
 
-      if (document.querySelector('.new-client__form.new-client-submit')) {
-        document.querySelector('.new-client__form.new-client-submit').classList.remove('new-client-submit');
+      if (document.querySelector('.new-client__form.new-client__submit')) {
+        document.querySelector('.new-client__form.new-client__submit').classList.remove('new-client__submit');
       }
 
       document.querySelectorAll('.new-contact').forEach((el) => {
@@ -568,8 +568,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       lastNameFromServer.value = `${clientFromServer.lastName}`;
       document.querySelector('.cancel-btn').classList.add('is-hidden');
 
-      if (document.querySelector('.new-client-submit')) {
-        document.querySelector('.new-client-submit').classList.remove('new-client-submit');
+      if (document.querySelector('.new-client__submit')) {
+        document.querySelector('.new-client__submit').classList.remove('new-client__submit');
       }
       document.querySelector('.new-client__form').classList.add('change-client-submit');
 
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // Кнопка удаления клиента внутри модального окна
       document.querySelector('.new-client__delete-btn').addEventListener('click', (e) => {
-        let deleteBtn = document.querySelector('.delete-box__delete-btn');
+        let deleteBtn = document.querySelector('.delete-modal__delete-btn');
         deleteBtn.removeAttribute('id');
 
         let random = Math.random() * 10000;
@@ -730,12 +730,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     client.contacts = [];
 
 
-    document.querySelectorAll('.form-input-error').forEach((el) => {
+    document.querySelectorAll('.form__error').forEach((el) => {
       el.remove();
     });
 
-    document.querySelectorAll('.new-contact-error').forEach((el) => {
-      el.classList.remove('new-contact-error');
+    document.querySelectorAll('.new-contact__error').forEach((el) => {
+      el.classList.remove('new-contact__error');
     });
 
     if (document.querySelector('.error')) {
@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     validation();
 
-    if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
+    if (document.querySelector('.form__error') || document.querySelector('.new-contact__error')) {
       document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
         el.removeAttribute('disabled')
       })
@@ -911,14 +911,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (surnameInputValid.value.trim().length === 0) {
       let surnameError = document.createElement('span');
       surnameError.textContent = 'Введите фамилию';
-      surnameError.classList.add('form-input-error')
+      surnameError.classList.add('form__error')
       labelForSurnameValid.appendChild(surnameError);
       surnameInputValid.classList.add('error')
     }
     if (surnameInputValid.value.search(/\d|^A-Za-zА-Яа-я/) != -1) {
       let surnameError = document.createElement('span');
       surnameError.textContent = 'Фамилия введена некорректно';
-      surnameError.classList.add('form-input-error')
+      surnameError.classList.add('form__error')
       labelForSurnameValid.appendChild(surnameError);
       surnameInputValid.classList.add('error')
     };
@@ -927,14 +927,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (nameInputValid.value.trim().length === 0) {
       let nameError = document.createElement('span');
       nameError.textContent = 'Введите имя';
-      nameError.classList.add('form-input-error');
+      nameError.classList.add('form__error');
       labelForNameValid.appendChild(nameError);
       nameInputValid.classList.add('error')
     };
     if (nameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
       let nameError = document.createElement('span');
       nameError.textContent = 'Имя введено некорректно';
-      nameError.classList.add('form-input-error')
+      nameError.classList.add('form__error')
       labelForNameValid.appendChild(nameError);
       nameInputValid.classList.add('error')
     };
@@ -943,7 +943,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (lastNameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
       let lastNameError = document.createElement('span');
       lastNameError.textContent = 'Отчество введено некорректно';
-      lastNameError.classList.add('form-input-error')
+      lastNameError.classList.add('form__error')
       labelForLastNameValid.appendChild(lastNameError);
       lastNameInputValid.classList.add('error')
     };
@@ -954,11 +954,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         const oneContactInput = oneContact.querySelector('input')
         if (selectAttr === 'tel') {
           if (oneContactInput.value.replace(/[^+\d]/g, '').length < 12) {
-            oneContactInput.classList.add('new-contact-error');
+            oneContactInput.classList.add('new-contact__error');
           };
         } else {
           if (oneContactInput.value.trim().length === 0) {
-            oneContactInput.classList.add('new-contact-error');
+            oneContactInput.classList.add('new-contact__error');
           }
         }
       })
@@ -1194,8 +1194,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
 
-        if (document.querySelector('.form-input-error')) {
-          document.querySelectorAll('.form-input-error').forEach((el) => {
+        if (document.querySelector('.form__error')) {
+          document.querySelectorAll('.form__error').forEach((el) => {
             el.remove();
           })
         }
@@ -1235,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.querySelectorAll('.btn__delete-client').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const target = e.target.closest('.btn__delete-client');
-        let deleteBtn = document.querySelector('.delete-box__delete-btn');
+        let deleteBtn = document.querySelector('.delete-modal__delete-btn');
         deleteBtn.removeAttribute('id');
 
         let id = target.parentNode.parentNode.querySelector('.tbody__td--id').textContent;
@@ -1312,13 +1312,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     preloaderRow.append(preloaderTable);
   }
 
-  // ---------- Сортировка Up
+  // ---------- Сортировка Вверх
   function sortUp(field) {
     let sortedClients = clients.sort((a, b) => (a[field] >= b[field] ? 1 : -1))
     createTable(sortedClients)
   }
 
-  // ---------- Сортровка Down
+  // ---------- Сортровка Вниз
   function sortDown(field) {
     let sortedClients = clients.sort((a, b) => (a[field] < b[field] ? 1 : -1))
     createTable(sortedClients)
@@ -1327,22 +1327,22 @@ document.addEventListener('DOMContentLoaded', async function () {
   // ---------- Окно подтверждения удаления клиента
   function deleteClient() {
     const deleteBox = document.createElement('div');
-    deleteBox.classList.add('delete-box');
+    deleteBox.classList.add('delete-modal');
 
     const deleteTitle = document.createElement('p');
-    deleteTitle.classList.add('delete-box__title');
+    deleteTitle.classList.add('delete-modal__title');
     deleteTitle.textContent = 'Удалить клиета';
 
     const deleteText = document.createElement('p');
-    deleteText.classList.add('delete-box__descr');
+    deleteText.classList.add('delete-modal__descr');
     deleteText.textContent = 'Вы действительно хотите удалить данного клиента?'
 
     const deleteBoxBtn = document.createElement('button');
-    deleteBoxBtn.classList.add('delete-box__delete-btn', 'btn-reset');
+    deleteBoxBtn.classList.add('delete-modal__delete-btn', 'btn-reset');
     deleteBoxBtn.textContent = 'Удалить';
 
     const cancelDeleteBox = document.createElement('a');
-    cancelDeleteBox.classList.add('delete-box__cancel-btn', 'btn-reset')
+    cancelDeleteBox.classList.add('delete-modal__cancel-btn', 'btn-reset')
     cancelDeleteBox.textContent = 'Отмена';
 
     const exitBtn = document.createElement('a');
@@ -1382,9 +1382,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     if (sortVar === 'up') {
-      sortUp(field)
+      sortUp(field);
     } else if (sortVar === 'down') {
-      sortDown(field)
+      sortDown(field);
     }
 
     if (document.querySelector('.table-preload')) {
@@ -1393,6 +1393,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.querySelector('.btn__add-client').classList.remove('is-hidden');
   }
+
   await loadTable('up', 'id');
 
   // ---------- Сортировка по id, дате создания и изменения
@@ -1410,7 +1411,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       document.querySelector(classname).classList.toggle('sort-down');
-      // document.querySelector(classname).classList.add('is-color');
 
       if (document.querySelector(classname + '.sort-down')) {
         sortDown(field)
@@ -1456,6 +1456,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     autoBox.append(autoList)
 
     let currentFocus;
+    
     input.addEventListener('input', (e) => {
       let clients = [];
 
@@ -1499,7 +1500,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             input.value = e.target.querySelector('input').value;
-            
+
             closeAllItems();
 
             document.querySelectorAll('.tbody__td--name').forEach((el) => {
@@ -1589,49 +1590,95 @@ document.addEventListener('DOMContentLoaded', async function () {
   // ---------- Закрытие модального окна по клику снаружи + кнопка сохранить и кнопка удалить контакт
   document.querySelector('.new-client').addEventListener('click', (e) => {
     e.preventDefault()
+
     const target = e.target;
+
     if (target.closest('.new-client__label')) {
       const attr = target.closest('.new-client__label').getAttribute('for');
       document.getElementById(`${attr}`).focus();
     }
+
     if (target.closest('.save-btn')) {
-      if (document.querySelector('.new-client-submit')) {
-        newClientSubmit()
+      if (document.querySelector('.new-client__submit')) {
+        newClientSubmit();
       }
     }
-    if (target.closest('.new-contact__btn')) {
+
+    if (target.closest('.btn__new-contact')) {
       e.preventDefault();
-      let targetBtn = target.closest('.new-contact__btn').parentNode;
-      targetBtn.remove()
+
+      let targetBtn = target.closest('.btn__new-contact').parentNode;
+
+      targetBtn.remove();
+
       allNewContacts = document.querySelectorAll('.new-contact');
-      console.log(allNewContacts.length)
+
       if (allNewContacts.length < 10) {
         document.querySelector('.add-contact__btn').classList.remove('is-hidden')
       };
+
       if (allNewContacts.length == 0) {
         document.querySelector('.add-contact').classList.remove('is-open')
       }
       return
     }
 
-    if (!target.closest('.new-client__modal') && !target.closest('.delete-box') && !target.closest('.add-contact')) {
+    if (!target.closest('.new-client__modal') && !target.closest('.delete-modal') && !target.closest('.add-contact')) {
       if (document.querySelector('.inside')) {
         document.querySelector('.new-client__modal').classList.add('modal-open');
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
         document.querySelectorAll('.inside').forEach((el) => {
-          el.classList.remove('inside')
+          el.classList.remove('inside');
         })
       } else if (document.querySelector('.outside')) {
-        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.delete-modal').classList.remove('modal-open');
         document.querySelector('.new-client').classList.remove('modal-open');
         document.querySelectorAll('.outside').forEach((el) => {
-          el.classList.remove('outside')
+          el.classList.remove('outside');
         })
       } else if (!document.querySelector('.inside') && !document.querySelector('.outside')) {
-        modalClose()
+        modalClose();
       }
 
     }
   })
+
+  // ---------- Изменение цвета при клике сортировки
+  function colorSort() {
+
+    const theadId = document.querySelector('.thead__th--id');
+    const theadName = document.querySelector('.thead__th--name');
+    const theadCreate = document.querySelector('.thead__th--create');
+    const theadChange = document.querySelector('.thead__th--change');
+
+    theadId.addEventListener('click', () => {
+      theadId.classList.add('is-color');
+      theadName.classList.remove('is-color');
+      theadCreate.classList.remove('is-color');
+      theadChange.classList.remove('is-color');
+    })
+
+    theadName.addEventListener('click', () => {
+      theadName.classList.add('is-color');
+      theadId.classList.remove('is-color');
+      theadCreate.classList.remove('is-color');
+      theadChange.classList.remove('is-color');
+    })
+
+    theadCreate.addEventListener('click', () => {
+      theadCreate.classList.add('is-color');
+      theadName.classList.remove('is-color');
+      theadId.classList.remove('is-color');
+      theadChange.classList.remove('is-color');
+    })
+
+    theadChange.addEventListener('click', () => {
+      theadChange.classList.add('is-color');
+      theadCreate.classList.remove('is-color');
+      theadName.classList.remove('is-color');
+      theadId.classList.remove('is-color');
+    })
+  }
+  colorSort();
 
 });

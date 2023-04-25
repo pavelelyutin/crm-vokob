@@ -5,14 +5,13 @@ document.addEventListener('DOMContentLoaded', async function () {
   let clients = [];
 
   // Открытие модального окна с данными клиента при загрузке страницы
-  // function loadPageWithClientModal() {
-  //   if (window.location.hash.includes('id')) {
-  //     const id = window.location.hash.slice(3);
-  //     changeClientModal(id);
-  //   }
-  // };
-
-  // loadPageWithClientModal();
+  function loadPageWithClientModal() {
+    if (window.location.hash.includes('id')) {
+      const id = window.location.hash.slice(3);
+      changeClientModal(id);
+    }
+  };
+  loadPageWithClientModal();
 
   // --------- Открытие модального окна
   function modalOpen() {
@@ -33,17 +32,17 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     e.preventDefault();
 
-    // if (document.querySelector('.form-input-error')) {
-    //   document.querySelectorAll('.form-input-error').forEach((el) => {
-    //     el.remove();
-    //   })
-    // }
+    if (document.querySelector('.form-input-error')) {
+      document.querySelectorAll('.form-input-error').forEach((el) => {
+        el.remove();
+      })
+    }
 
-    // if (document.querySelector('.error')) {
-    //   document.querySelectorAll('.error').forEach((el) => {
-    //     el.classList.remove('error');
-    //   })
-    // }
+    if (document.querySelector('.error')) {
+      document.querySelectorAll('.error').forEach((el) => {
+        el.classList.remove('error');
+      })
+    }
 
     document.querySelector('.new-client__delete-btn').classList.add('is-hidden');
 
@@ -51,9 +50,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.querySelector('.new-client__title').textContent = 'Новый клиент';
 
-    // if (document.querySelector('.new-client-title_id')) {
-    //   document.querySelector('.new-client-title_id').remove()
-    // }
+    if (document.querySelector('.new-client__id')) {
+      document.querySelector('.new-client__id').remove()
+    }
 
     modalOpen();
 
@@ -69,11 +68,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         el.classList.add('is-active');
 
-        // if (document.querySelector('.form-input-error')) {
-        //   e.target.previousSibling.querySelector('.form-input-error').remove()
-        // }
+        if (document.querySelector('.form-input-error')) {
+          e.target.previousSibling.querySelector('.form-input-error').remove()
+        }
 
-        // el.classList.remove('error')
+        el.classList.remove('error');
 
       })
     })
@@ -463,7 +462,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // ---------- Открытие окна удаления внутри модального окна с клиентом
   function deleteModalOpenInside() {
-    document.querySelector('.new-client').classList.remove('modal-open');
+    document.querySelector('.new-client__modal').classList.remove('modal-open');
     document.querySelector('.delete-box').classList.add('modal-open');
   }
 
@@ -505,382 +504,405 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   // ---------- Модальное окно редактирования клиента
-  // async function changeClientModal(id) {
-  //   let response = await fetch(SERVER_URL + `/api/clients/${id}`);
-  //   if (!response.ok) {
-  //     const error = document.querySelector('.error-server');
+  async function changeClientModal(id) {
+    let response = await fetch(SERVER_URL + `/api/clients/${id}`);
 
-  //     modalOpen()
+    if (!response.ok) {
+      const error = document.querySelector('.error-server');
 
-  //     error.classList.remove('is-hidden');
+      modalOpen();
 
-  //     if (response.status == 404) {
-  //       error.textContent = 'Запрашиваемый элемент не найден в базе данных';
-  //       return;
-  //     } else if (response.status == 422) {
-  //       const answer = await response.json();
-  //       const messageFromServer = answer[0].message;
-  //       error.textContent = `${messageFromServer}`;
-  //       return;
-  //     } else if (response.status[0] == 5) {
-  //       error.textContent = 'Что-то пошло не так';
-  //       return
-  //     }
-  //   } else {
-  //     let clientFromServer = await response.json();
-  //     contactsFromServer = clientFromServer.contacts;
+      error.classList.remove('is-hidden');
 
-  //     document.querySelector('.btn__add-contact').classList.add('first-click');
+      if (response.status == 404) {
+        error.textContent = 'Запрашиваемый элемент не найден в базе данных';
+        return;
+      } else if (response.status == 422) {
+        const answer = await response.json();
+        const messageFromServer = answer[0].message;
+        error.textContent = `${messageFromServer}`;
+        return;
+      } else if (response.status[0] == 5) {
+        error.textContent = 'Что-то пошло не так';
+        return
+      }
+    } else {
+      let clientFromServer = await response.json();
+      let contactsFromServer = clientFromServer.contacts;
 
-  //     if (document.querySelector('.new-client__form.new-client-submit')) {
-  //       document.querySelector('.new-client__form.new-client-submit').classList.remove('new-client-submit');
-  //     }
+      document.querySelector('.add-contact').classList.add('first-click');
 
-  //     document.querySelectorAll('.new-contact').forEach((el) => {
-  //       el.remove()
-  //     })
+      if (document.querySelector('.new-client__form.new-client-submit')) {
+        document.querySelector('.new-client__form.new-client-submit').classList.remove('new-client-submit');
+      }
 
-  //     document.querySelector('.add-contact').classList.remove('is-open');
+      document.querySelectorAll('.new-contact').forEach((el) => {
+        el.remove()
+      })
 
-  //     let modalBox = document.querySelector('.new-client');
+      document.querySelector('.add-contact').classList.remove('is-open');
 
-  //     let clientTitle = document.querySelector('.new-client__title')
-  //     clientTitle.textContent = 'Изменить данные ';
+      let modalBox = document.querySelector('.new-client');
 
-  //     let idInTitle = document.createElement('span');
+      let clientTitle = document.querySelector('.new-client__title')
+      clientTitle.textContent = 'Изменить данные ';
 
-  //     idInTitle.classList.add('new-client__id');
+      let idInTitle = document.createElement('span');
 
-  //     idInTitle.textContent = `ID: ${id}`;
+      idInTitle.classList.add('new-client__id');
 
-  //     clientTitle.append(idInTitle);
+      idInTitle.textContent = `ID: ${id}`;
 
-  //     let surnameFromServer = document.getElementById('form__input--surname');
-  //     surnameFromServer.value = `${clientFromServer.surname}`;
-  //     surnameFromServer.classList.add('is-active');
+      clientTitle.append(idInTitle);
 
-  //     let nameFromServer = document.getElementById('form__input--name');
-  //     nameFromServer.classList.add('is-active');
-  //     nameFromServer.value = `${clientFromServer.name}`;
+      let surnameFromServer = document.getElementById('form__input--surname');
+      surnameFromServer.value = `${clientFromServer.surname}`;
+      surnameFromServer.classList.add('is-active');
 
-  //     let lastNameFromServer = document.getElementById('form__input--lastname');
-  //     lastNameFromServer.classList.add('is-active');
-  //     lastNameFromServer.value = `${clientFromServer.lastName}`;
-  //     document.querySelector('.cancel-btn').classList.add('is-hidden');
+      let nameFromServer = document.getElementById('form__input--name');
+      nameFromServer.classList.add('is-active');
+      nameFromServer.value = `${clientFromServer.name}`;
 
-  //     if (document.querySelector('.new-client-submit')) {
-  //       document.querySelector('.new-client-submit').classList.remove('new-client-submit');
-  //     }
-  //     document.querySelector('.new-client__form').classList.add('change-client-submit');
+      let lastNameFromServer = document.getElementById('form__input--lastname');
+      lastNameFromServer.classList.add('is-active');
+      lastNameFromServer.value = `${clientFromServer.lastName}`;
+      document.querySelector('.cancel-btn').classList.add('is-hidden');
 
-  //     if (document.querySelector('.new-client__delete-btn.is-hidden')) {
-  //       document.querySelector('.new-client__delete-btn.is-hidden').classList.remove('is-hidden');
-  //     }
+      if (document.querySelector('.new-client-submit')) {
+        document.querySelector('.new-client-submit').classList.remove('new-client-submit');
+      }
+      document.querySelector('.new-client__form').classList.add('change-client-submit');
 
-  //     modalOpen();
+      if (document.querySelector('.new-client__delete-btn.is-hidden')) {
+        document.querySelector('.new-client__delete-btn.is-hidden').classList.remove('is-hidden');
+      }
 
-  //     document.querySelector('.btn__add-contact').addEventListener('click', (e) => {
-  //       if (document.querySelector('.first-click')) {
-  //         document.querySelector('.first-click').classList.remove('first-click');
+      modalOpen();
+      console.log(contactsFromServer)
 
-  //         for (let i = 0; i < contactsFromServer.length - 1; i++) {
-  //           document.querySelector('.btn__add-contact').click()
-  //         }
+      document.querySelector('.add-contact').addEventListener('click', (e) => {
+        if (document.querySelector('.first-click')) {
+          document.querySelector('.first-click').classList.remove('first-click');
 
-  //         document.querySelectorAll('.new-contact').forEach((elem) => {
-  //           elem.classList.add('for-contact-from-server');
-  //           elem.querySelectorAll('.select__option_selected').forEach((el) => {
-  //             el.classList.remove('select__option_selected');
-  //           })
-  //         })
+          for (let i = 0; i < contactsFromServer.length - 1; i++) {
+            document.querySelector('.add-contact__btn').click();
+          }
 
-  //         for (const contactFromServer of contactsFromServer) {
-  //           const typeOfContact = contactFromServer.type;
-  //           const valueOfContact = contactFromServer.value
-  //           let newContactBox = document.querySelector('.for-contact-from-server')
-  //           let selectBtn = newContactBox.firstChild.firstChild
-  //           let newContactInput = newContactBox.childNodes[1]
-  //           if (typeOfContact === 'Телефон') {
-  //             selectBtn.setAttribute('value', 'tel')
-  //             selectBtn.value = 'tel'
-  //             newContactBox.childNodes[1].value = `${valueOfContact}`
-  //           } else if (typeOfContact === 'Email') {
-  //             selectBtn.setAttribute('value', 'email')
-  //             selectBtn.textContent = 'Email'
-  //             Inputmask.remove(newContactInput)
-  //             selectBtn.selectedIndex = 3
-  //             console.log(selectBtn.selectedIndex)
-  //             newContactBox.childNodes[1].value = `${valueOfContact}`
-  //           } else if (typeOfContact === 'Facebook') {
-  //             selectBtn.setAttribute('value', 'facebook')
-  //             selectBtn.textContent = 'Facebook'
-  //             Inputmask.remove(newContactInput)
-  //             newContactBox.childNodes[1].value = `${valueOfContact}`
-  //           } else if (typeOfContact === 'ВКонтакте') {
-  //             selectBtn.setAttribute('value', 'vk')
-  //             selectBtn.textContent = 'VK'
-  //             Inputmask.remove(newContactInput)
-  //             newContactBox.childNodes[1].value = `${valueOfContact}`
-  //           } else if (typeOfContact === 'Другое') {
-  //             selectBtn.setAttribute('value', 'other')
-  //             selectBtn.textContent = 'Другое'
-  //             Inputmask.remove(newContactInput)
-  //             newContactBox.childNodes[1].value = `${valueOfContact}`
-  //           }
-  //           newContactBox.classList.remove('for-contact-from-server')
-  //         }
-  //       }
-  //     });
+          document.querySelectorAll('.new-contact').forEach((elem) => {
+            elem.classList.add('for-contact-from-server');
+            elem.querySelectorAll('.select__option_selected').forEach((el) => {
+              el.classList.remove('select__option_selected');
+            })
+          })
 
-  //     // Кнопка сохранения изменений
-  //     if (document.querySelector('.change-client-submit')) {
-  //       document.querySelector('.save-btn').addEventListener('click', (e) => {
-  //         e.preventDefault()
-  //         const hash = document.location.hash
-  //         const thisId = hash.slice(3)
-  //         changeClientSubmit(thisId)
-  //       })
+          for (const contactFromServer of contactsFromServer) {
+            const typeOfContact = contactFromServer.type;
 
-  //     }
+            const valueOfContact = contactFromServer.value;
 
-  //     // Кнопка удаления клиента внутри модального окна
-  //     document.querySelector('.new-client__delete-btn').addEventListener('click', (e) => {
-  //       let deleteBtn = document.querySelector('.delete-box__delete-btn')
-  //       deleteBtn.removeAttribute('id')
+            let newContactBox = document.querySelector('.for-contact-from-server');
 
+            console.log(newContactBox)
+            let selectBtn = newContactBox.firstChild.firstChild;
+            console.log(selectBtn)
+            let newContactInput = newContactBox.childNodes[1];
 
-  //       let random = Math.random() * 10000
-  //       random = Math.round(random)
-  //       deleteBtn.id = random
+            if (typeOfContact === 'Телефон') {
+              selectBtn.setAttribute('value', 'tel');
+              selectBtn.value = 'tel';
+              newContactBox.childNodes[1].value = `${valueOfContact}`;
+            } else if (typeOfContact === 'Email') {
+              selectBtn.setAttribute('value', 'email');
+              selectBtn.textContent = 'Email';
+              Inputmask.remove(newContactInput);
+              selectBtn.selectedIndex = 3;
+              newContactBox.childNodes[1].value = `${valueOfContact}`;
+            } else if (typeOfContact === 'Facebook') {
+              selectBtn.setAttribute('value', 'facebook');
+              selectBtn.textContent = 'Facebook';
+              Inputmask.remove(newContactInput);
+              newContactBox.childNodes[1].value = `${valueOfContact}`;
+            } else if (typeOfContact === 'ВКонтакте') {
+              selectBtn.setAttribute('value', 'vk');
+              selectBtn.textContent = 'VK';
+              Inputmask.remove(newContactInput);
+              newContactBox.childNodes[1].value = `${valueOfContact}`;
+            } else if (typeOfContact === 'Другое') {
+              selectBtn.setAttribute('value', 'other');
+              selectBtn.textContent = 'Другое';
+              Inputmask.remove(newContactInput);
+              newContactBox.childNodes[1].value = `${valueOfContact}`;
+            }
 
-  //       deleteModalOpenInside()
-  //       document.getElementById(random).addEventListener('click', async () => {
-  //         const hash = document.location.hash
-  //         const thisId = hash.slice(3)
-  //         document.location.hash = ''
+            newContactBox.classList.remove('for-contact-from-server');
+          }
+        }
+      });
 
-  //         async function deleteFromServer() {
-  //           const response = await fetch(SERVER_URL + `/api/clients/${thisId}`, {
-  //             method: 'DELETE',
-  //           });
-  //         }
-  //         await deleteFromServer()
-  //         document.querySelector('.exit-btn').classList.remove('inside')
-  //         document.querySelector('.exit-btn').classList.add('outside')
-  //         document.querySelectorAll('.table-td_id').forEach((el) => {
-  //           if (el.textContent == thisId) {
-  //             el.parentNode.remove()
-  //           }
-  //         })
-  //         for (const client of clients) {
-  //           if (client.id == thisId) {
-  //             const index = clients.indexOf(client);
-  //             if (index !== -1) {
-  //               clients.splice(index, 1)
-  //             }
-  //           }
-  //         }
-  //         document.querySelector('.exit-btn.outside').click()
-  //       })
-  //       deleteModalClose('inside')
+      // Кнопка сохранения изменений
+      if (document.querySelector('.change-client-submit')) {
+        document.querySelector('.save-btn').addEventListener('click', (e) => {
+          e.preventDefault()
+          const hash = document.location.hash
+          const thisId = hash.slice(3)
+          changeClientSubmit(thisId)
+        })
+      }
 
-  //     });
-  //   }
-  // }
+      // Кнопка удаления клиента внутри модального окна
+      document.querySelector('.new-client__delete-btn').addEventListener('click', (e) => {
+        let deleteBtn = document.querySelector('.delete-box__delete-btn');
+        deleteBtn.removeAttribute('id');
+
+        let random = Math.random() * 10000;
+        random = Math.round(random);
+        deleteBtn.id = random;
+
+        deleteModalOpenInside();
+
+        document.getElementById(random).addEventListener('click', async () => {
+          const hash = document.location.hash;
+          const thisId = hash.slice(3);
+          document.location.hash = '';
+
+          async function deleteFromServer() {
+            const response = await fetch(SERVER_URL + `/api/clients/${thisId}`, {
+              method: 'DELETE',
+            });
+          }
+
+          await deleteFromServer();
+
+          document.querySelector('.exit-btn').classList.remove('inside');
+
+          document.querySelector('.exit-btn').classList.add('outside');
+
+          document.querySelectorAll('.tbody__td--id').forEach((el) => {
+            if (el.textContent == thisId) {
+              el.parentNode.remove();
+            }
+          })
+
+          for (const client of clients) {
+            if (client.id == thisId) {
+              const index = clients.indexOf(client);
+              if (index !== -1) {
+                clients.splice(index, 1);
+              }
+            }
+          }
+
+          document.querySelector('.exit-btn.outside').click();
+
+        })
+
+        deleteModalClose('inside');
+
+      });
+    }
+  }
 
   // ---------- Отправка данных редактирования клиента
-  // async function changeClientSubmit(id) {
-  //   let response = await fetch(`http://localhost:3000/api/clients/${id}`)
-  //   let clientFromServer = await response.json();
+  async function changeClientSubmit(id) {
+    let response = await fetch(SERVER_URL + `/api/clients/${id}`);
+    let clientFromServer = await response.json();
 
-  //   for (const client of clients) {
-  //     if (client.id == id) {
-  //       const index = clients.indexOf(client);
-  //       if (index !== -1) {
-  //         clients.splice(index, 1)
-  //       }
-  //     }
-  //   }
-  //   contactsFromServer = clientFromServer.contacts
-  //   document.getElementById('client-form').querySelectorAll('input').forEach((el) => {
-  //     el.setAttribute('disabled', 'true')
-  //   })
-  //   let client = {}
-  //   client.id = clientFromServer.id
-  //   client.name = clientFromServer.name
-  //   client.surname = clientFromServer.surname
-  //   client.lastName = clientFromServer.lastName
-  //   client.createdAt = clientFromServer.createdAt
-  //   client.contacts = []
+    for (const client of clients) {
+      if (client.id == id) {
+        const index = clients.indexOf(client);
+        if (index !== -1) {
+          clients.splice(index, 1)
+        }
+      }
+    }
+
+    let contactsFromServer = clientFromServer.contacts;
+    document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+      el.setAttribute('disabled', 'true')
+    })
+
+    let client = {};
+    client.id = clientFromServer.id;
+    client.name = clientFromServer.name;
+    client.surname = clientFromServer.surname;
+    client.lastName = clientFromServer.lastName;
+    client.createdAt = clientFromServer.createdAt;
+    client.contacts = [];
 
 
-  //   document.querySelectorAll('.form-input-error').forEach((el) => {
-  //     el.remove();
-  //   });
-  //   document.querySelectorAll('.new-contact-error').forEach((el) => {
-  //     el.classList.remove('new-contact-error');
-  //   });
-  //   if (document.querySelector('.error')) {
-  //     document.querySelectorAll('.error').forEach((el) => {
-  //       el.classList.remove('error')
-  //     })
-  //   }
-  //   validation();
+    document.querySelectorAll('.form-input-error').forEach((el) => {
+      el.remove();
+    });
 
-  //   if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
-  //     document.getElementById('client-form').querySelectorAll('input').forEach((el) => {
-  //       el.removeAttribute('disabled')
-  //     })
-  //     return
-  //   }
+    document.querySelectorAll('.new-contact-error').forEach((el) => {
+      el.classList.remove('new-contact-error');
+    });
 
-  //   let saveBtn = document.querySelector('.save-btn')
-  //   saveBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-  //       <path d="M1.00008 6.04008C1.00008 8.82356 3.2566 11.0801 6.04008 11.0801C8.82356 11.0801 11.0801 8.82356 11.0801 6.04008C11.0801 3.2566 8.82356 1.00008 6.04008 1.00008C5.38922 1.00008 4.7672 1.12342 4.196 1.34812" stroke="#B89EFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
-  //       </svg> Сохранить`;
+    if (document.querySelector('.error')) {
+      document.querySelectorAll('.error').forEach((el) => {
+        el.classList.remove('error')
+      })
+    };
 
-  //   window.location.hash = '';
+    validation();
 
-  //   const surnameClient = document.getElementById('new-client-surname').value.trim().split(' ').join('').toLowerCase();
-  //   const nameClient = document.getElementById('new-client-name').value.trim().split(' ').join('').toLowerCase();
-  //   const lastNameClient = document.getElementById('new-client-last-name').value.trim().split(' ').join('').toLowerCase();
+    if (document.querySelector('.form-input-error') || document.querySelector('.new-contact-error')) {
+      document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+        el.removeAttribute('disabled')
+      })
+      return
+    }
 
-  //   const newSurnameClient = surnameClient[0].toUpperCase() + surnameClient.slice(1)
-  //   const newNameClient = nameClient[0].toUpperCase() + nameClient.slice(1)
+    let saveBtn = document.querySelector('.save-btn');
 
-  //   if (lastNameClient != '') {
-  //     const newLastNameClient = lastNameClient[0].toUpperCase() + lastNameClient.slice(1)
-  //     if (newLastNameClient !== clientFromServer.lastName) {
-  //       client.lastName = `${newLastNameClient}`;
-  //     }
-  //   } else {
-  //     if (clientFromServer.lastName !== '') {
-  //       client.lastName = '';
-  //     }
-  //   }
-  //   if (newSurnameClient !== clientFromServer.surname) {
-  //     client.surname = `${newSurnameClient}`
-  //   }
-  //   if (newNameClient !== clientFromServer.name) {
-  //     client.name = `${newNameClient}`
-  //   }
+    saveBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.00008 6.04008C1.00008 8.82356 3.2566 11.0801 6.04008 11.0801C8.82356 11.0801 11.0801 8.82356 11.0801 6.04008C11.0801 3.2566 8.82356 1.00008 6.04008 1.00008C5.38922 1.00008 4.7672 1.12342 4.196 1.34812" stroke="#B89EFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+        </svg> Сохранить`;
 
-  //   if (!document.querySelector('.first-click')) {
-  //     let allNewContacts = document.querySelectorAll('.new-contact');
-  //     for (const contact of allNewContacts) {
-  //       const attr = contact.querySelector('button').getAttribute('value')
-  //       if (attr === 'tel') {
-  //         let telNumber = contact.querySelector('input').value.replace(/[^+\d]/g, '')
-  //         const contactObject = {
-  //           type: 'Телефон',
-  //           value: `${telNumber}`
-  //         }
-  //         client.contacts.push(contactObject)
-  //       }
-  //       if (attr === 'email') {
-  //         let emailContact = contact.querySelector('input').value.trim()
-  //         const contactObject = {
-  //           type: 'Email',
-  //           value: `${emailContact}`
-  //         };
-  //         client.contacts.push(contactObject)
-  //       }
-  //       if (attr === 'facebook') {
-  //         let fbContact = contact.querySelector('input').value.trim()
-  //         const contactObject = {
-  //           type: 'Facebook',
-  //           value: `${fbContact}`
-  //         };
-  //         client.contacts.push(contactObject)
-  //       }
-  //       if (attr === 'vk') {
-  //         let vkContact = contact.querySelector('input').value.trim()
-  //         const contactObject = {
-  //           type: 'ВКонтакте',
-  //           value: `${vkContact}`
-  //         };
-  //         client.contacts.push(contactObject)
-  //       };
-  //       if (attr === 'other') {
-  //         let otherContact = contact.querySelector('input').value.trim()
-  //         const contactObject = {
-  //           type: 'Другое',
-  //           value: `${otherContact}`
-  //         };
-  //         client.contacts.push(contactObject)
-  //       }
-  //     }
-  //   } else {
-  //     delete client.contacts
-  //   }
+    window.location.hash = '';
 
-  //   async function patchToServer() {
-  //     const response = await fetch(`http://localhost:3000/api/clients/${id}`, {
-  //       method: 'PATCH',
-  //       body: JSON.stringify(client),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-  //     if (!response.ok) {
-  //       const error = document.querySelector('.error-server');
-  //       error.classList.remove('is-hidden');
-  //       document.getElementById('client-form').querySelectorAll('input').forEach((el) => {
-  //         el.removeAttribute('disabled')
-  //       })
-  //       if (response.status == 404) {
-  //         error.textContent = 'Запрашиваемый элемент не найден в базе данных';
-  //         return;
-  //       } else if (response.status == 422) {
-  //         const answer = await response.json();
-  //         const messageFromServer = answer[0].message;
-  //         error.textContent = `${messageFromServer}`;
-  //         return;
-  //       } else if (response.status[0] == 5) {
-  //         error.textContent = 'Что-то пошло не так';
-  //         return
-  //       }
-  //     } else {
-  //       document.getElementById('client-form').querySelectorAll('input').forEach((el) => {
-  //         el.removeAttribute('disabled')
-  //       })
-  //       document.querySelector('.new-client-form').classList.remove('change-client-submit')
-  //       // document.querySelector('.new-client-title_id').remove()
-  //       // document.querySelector('.new-client-title').textContent = 'Новый клиент'
-  //       modalClose();
-  //     }
-  //   }
+    const surnameClient = document.getElementById('form__input--surname').value.trim().split(' ').join('').toLowerCase();
+    const nameClient = document.getElementById('form__input--name').value.trim().split(' ').join('').toLowerCase();
+    const lastNameClient = document.getElementById('form__input--lastname').value.trim().split(' ').join('').toLowerCase();
 
-  //   await patchToServer();
+    const newSurnameClient = surnameClient[0].toUpperCase() + surnameClient.slice(1);
+    const newNameClient = nameClient[0].toUpperCase() + nameClient.slice(1);
 
-  //   async function getThisClient() {
-  //     const response = await fetch(`http://localhost:3000/api/clients/${id}`)
-  //     const clientFromServer = await response.json();
+    if (lastNameClient != '') {
+      const newLastNameClient = lastNameClient[0].toUpperCase() + lastNameClient.slice(1)
+      if (newLastNameClient !== clientFromServer.lastName) {
+        client.lastName = `${newLastNameClient}`;
+      }
+    } else {
+      if (clientFromServer.lastName !== '') {
+        client.lastName = '';
+      }
+    }
+    if (newSurnameClient !== clientFromServer.surname) {
+      client.surname = `${newSurnameClient}`
+    }
+    if (newNameClient !== clientFromServer.name) {
+      client.name = `${newNameClient}`
+    }
 
-  //     if (client.name == clientFromServer.name && client.surname == clientFromServer.surname && client.lastName == clientFromServer.lastName) {
-  //       client.updatedAt = clientFromServer.updatedAt;
-  //       client.contacts = clientFromServer.contacts
-  //     }
-  //   }
-  //   if (saveBtn.querySelector('svg')) {
-  //     saveBtn.querySelector('svg').remove()
-  //   }
+    if (!document.querySelector('.first-click')) {
+      let allNewContacts = document.querySelectorAll('.new-contact');
+      for (const contact of allNewContacts) {
+        const attr = contact.querySelector('button').getAttribute('value')
+        if (attr === 'tel') {
+          let telNumber = contact.querySelector('input').value.replace(/[^+\d]/g, '')
+          const contactObject = {
+            type: 'Телефон',
+            value: `${telNumber}`
+          }
+          client.contacts.push(contactObject)
+        }
+        if (attr === 'email') {
+          let emailContact = contact.querySelector('input').value.trim()
+          const contactObject = {
+            type: 'Email',
+            value: `${emailContact}`
+          };
+          client.contacts.push(contactObject)
+        }
+        if (attr === 'facebook') {
+          let fbContact = contact.querySelector('input').value.trim()
+          const contactObject = {
+            type: 'Facebook',
+            value: `${fbContact}`
+          };
+          client.contacts.push(contactObject)
+        }
+        if (attr === 'vk') {
+          let vkContact = contact.querySelector('input').value.trim()
+          const contactObject = {
+            type: 'ВКонтакте',
+            value: `${vkContact}`
+          };
+          client.contacts.push(contactObject)
+        };
+        if (attr === 'other') {
+          let otherContact = contact.querySelector('input').value.trim()
+          const contactObject = {
+            type: 'Другое',
+            value: `${otherContact}`
+          };
+          client.contacts.push(contactObject)
+        }
+      }
+    } else {
+      delete client.contacts
+    }
 
-  //   client.createdAt = clientFromServer.createdAt
-  //   await getThisClient()
-  //   let clientArray = [client]
-  //   document.querySelectorAll('.table-td_id').forEach((el) => {
-  //     if (el.textContent == id) {
-  //       el.parentNode.remove()
-  //     }
-  //   })
-  //   createTable(clientArray)
-  //   if (clients[clients.length - 1].id == client.id) {
-  //     return
-  //   } else {
-  //     clients.push(client)
-  //   }
-  // }
+    async function patchToServer() {
+      const response = await fetch(SERVER_URL + `/api/clients/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(client),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const error = document.querySelector('.error-server');
+        error.classList.remove('is-hidden');
+        document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+          el.removeAttribute('disabled')
+        })
+
+        if (response.status == 404) {
+          error.textContent = 'Запрашиваемый элемент не найден в базе данных';
+          return;
+        } else if (response.status == 422) {
+          const answer = await response.json();
+          const messageFromServer = answer[0].message;
+          error.textContent = `${messageFromServer}`;
+          return;
+        } else if (response.status[0] == 5) {
+          error.textContent = 'Что-то пошло не так';
+          return
+        }
+      } else {
+        document.getElementById('client__form').querySelectorAll('input').forEach((el) => {
+          el.removeAttribute('disabled')
+        })
+        document.querySelector('.new-client__form').classList.remove('change-client-submit')
+        // document.querySelector('.new-client-title_id').remove()
+        // document.querySelector('.new-client-title').textContent = 'Новый клиент'
+        modalClose();
+      }
+    }
+
+    await patchToServer();
+
+    async function getThisClient() {
+      const response = await fetch(SERVER_URL + `/api/clients/${id}`);
+      const clientFromServer = await response.json();
+
+      if (client.name == clientFromServer.name && client.surname == clientFromServer.surname && client.lastName == clientFromServer.lastName) {
+        client.updatedAt = clientFromServer.updatedAt;
+        client.contacts = clientFromServer.contacts;
+      }
+    }
+    if (saveBtn.querySelector('svg')) {
+      saveBtn.querySelector('svg').remove();
+    }
+
+    client.createdAt = clientFromServer.createdAt;
+    await getThisClient();
+    let clientArray = [client];
+    document.querySelectorAll('.tbody__td--id').forEach((el) => {
+      if (el.textContent == id) {
+        el.parentNode.remove();
+      }
+    })
+    createTable(clientArray)
+    if (clients[clients.length - 1].id == client.id) {
+      return
+    } else {
+      clients.push(client)
+    }
+  }
 
   // ---------- Валидация формы
   function validation() {
@@ -895,7 +917,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
     if (surnameInputValid.value.search(/\d|^A-Za-zА-Яа-я/) != -1) {
       let surnameError = document.createElement('span');
-      surnameError.textContent = 'введена некорректно';
+      surnameError.textContent = 'Фамилия введена некорректно';
       surnameError.classList.add('form-input-error')
       labelForSurnameValid.appendChild(surnameError);
       surnameInputValid.classList.add('error')
@@ -904,14 +926,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const labelForNameValid = document.querySelector('.new-client__label--name')
     if (nameInputValid.value.trim().length === 0) {
       let nameError = document.createElement('span');
-      nameError.textContent = 'введите имя';
+      nameError.textContent = 'Введите имя';
       nameError.classList.add('form-input-error');
       labelForNameValid.appendChild(nameError);
       nameInputValid.classList.add('error')
     };
     if (nameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
       let nameError = document.createElement('span');
-      nameError.textContent = 'введено некорректно';
+      nameError.textContent = 'Имя введено некорректно';
       nameError.classList.add('form-input-error')
       labelForNameValid.appendChild(nameError);
       nameInputValid.classList.add('error')
@@ -920,7 +942,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const labelForLastNameValid = document.querySelector('.new-client__label--lastname')
     if (lastNameInputValid.value.search(/\d|^A-Za-zА-яа-я/) != -1) {
       let lastNameError = document.createElement('span');
-      lastNameError.textContent = ' введено некорректно';
+      lastNameError.textContent = 'Отчество введено некорректно';
       lastNameError.classList.add('form-input-error')
       labelForLastNameValid.appendChild(lastNameError);
       lastNameInputValid.classList.add('error')
@@ -1187,9 +1209,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         let target = e.target.closest('.btn__change-client');
 
         const targetRow = target.parentNode.parentNode;
+
         target.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.00008 8.04008C3.00008 10.8236 5.2566 13.0801 8.04008 13.0801C10.8236 13.0801 13.0801 10.8236 13.0801 8.04008C13.0801 5.2566 10.8236 3.00008 8.04008 3.00008C7.38922 3.00008 6.7672 3.12342 6.196 3.34812" stroke="#9873FF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
           </svg>Изменить`;
+
         target.classList.add('is-animated');
 
         let idClient = targetRow.querySelector('.tbody__td--id').textContent;
@@ -1202,6 +1226,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         <path d="M2 11.5002V14.0002H4.5L11.8733 6.62687L9.37333 4.12687L2 11.5002ZM13.8067 4.69354C14.0667 4.43354 14.0667 4.01354 13.8067 3.75354L12.2467 2.19354C11.9867 1.93354 11.5667 1.93354 11.3067 2.19354L10.0867 3.41354L12.5867 5.91354L13.8067 4.69354Z" fill="#9873FF"/>
         </g>
         </svg>Изменить`;
+
         target.classList.remove('is-animated');
       })
     });
@@ -1260,10 +1285,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
   // Кнопка закрытия формы
-  // document.querySelector('.new-client__exit-btn').addEventListener('click', (e) => {
-  //   e.preventDefault();
-  //   modalClose();
-  // });
+  document.querySelector('.new-client__exit-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    modalClose();
+  });
 
   // ---------- Индикатор загрузки таблицы
   function preloadTable() {
@@ -1385,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       document.querySelector(classname).classList.toggle('sort-down');
-      document.querySelector(classname).classList.add('is-color');
+      // document.querySelector(classname).classList.add('is-color');
 
       if (document.querySelector(classname + '.sort-down')) {
         sortDown(field)
@@ -1423,179 +1448,190 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 
   // ---------- Поиск с автозаполнением
-  // function autocomplete() {
-  //   let input = document.getElementById('header__input');
-  //   let autoBox = document.querySelector('.header__autocomplete');
-  //   let autoList = document.createElement('div');
-  //   autoList.classList.add('autocomplete-list');
-  //   autoBox.append(autoList)
+  function autocomplete() {
+    let input = document.getElementById('header__input');
+    let autoBox = document.querySelector('.header__autocomplete');
+    let autoList = document.createElement('div');
+    autoList.classList.add('autocomplete-list');
+    autoBox.append(autoList)
 
-  //   let currentFocus;
-  //   input.addEventListener('input', (e) => {
-  //     let clients = [];
-  //     const allClients = document.querySelectorAll('.tbody__td--name');
-  //     for (const client of allClients) {
-  //       const clientName = client.textContent;
-  //       clients.push(clientName)
-  //     }
-  //     console.log(clients)
-  //     if (document.querySelector('.in-search')) {
-  //       document.querySelector('.in-search').classList.remove('in-search')
-  //     }
-  //     let inputValue = input.value;
+    let currentFocus;
+    input.addEventListener('input', (e) => {
+      let clients = [];
 
-  //     closeAllItems();
+      const allClients = document.querySelectorAll('.tbody__td--name');
 
-  //     if (!inputValue) {
-  //       return false;
-  //     }
+      for (const client of allClients) {
+        const clientName = client.textContent;
+        clients.push(clientName);
+      };
 
-  //     currentFocus = -1;
+      if (document.querySelector('.in-search')) {
+        document.querySelector('.in-search').classList.remove('in-search');
+      }
 
-  //     for (let i = 0; i < clients.length; i++) {
+      let inputValue = input.value;
 
-  //       if (clients[i].toLowerCase().includes(inputValue.toLowerCase())) {
-  //         const index = clients[i].toLowerCase().indexOf(inputValue.toLowerCase())
-  //         const indexLast = index + inputValue.length
-  //         let autoItem = document.createElement('div');
-  //         autoItem.classList.add('autocomplete-item')
-  //         autoItem.innerHTML = `${clients[i].slice(0, index)}<strong>${clients[i].slice(index, indexLast)}</strong>${clients[i].slice(indexLast)}<input type='hidden' value='${clients[i]}'>`
+      closeAllItems();
 
-  //         autoItem.addEventListener('click', (e) => {
-  //           if (document.querySelector('.in-search')) {
-  //             document.querySelector('.in-search').classList.remove('in-search')
-  //           }
-  //           input.value = e.target.querySelector('input').value
-  //           closeAllItems()
-  //           document.querySelectorAll('.tbody__td--name').forEach((el) => {
-  //             if (el.textContent == input.value) {
-  //               el.parentNode.classList.add('in-search')
-  //               let row = document.querySelector('.in-search')
-  //               row.scrollIntoView({ block: "center", behavior: "smooth" })
-  //             }
-  //           })
-  //         })
-  //         autoList.append(autoItem)
-  //       }
-  //     }
-  //   })
+      if (!inputValue) {
+        return false;
+      }
 
-  //   input.addEventListener('keydown', (e) => {
+      currentFocus = -1;
 
-  //     let items = document.querySelectorAll('.autocomplete-item');
+      for (let i = 0; i < clients.length; i++) {
 
-  //     if (e.key == 'ArrowDown') {
-  //       currentFocus++;
-  //       addActive(items)
-  //     } else if (e.key == 'ArrowUp') {
-  //       currentFocus--;
-  //       addActive(items)
-  //     } else if (e.key == 'Enter') {
-  //       e.preventDefault();
-  //       if (currentFocus > -1) {
-  //         if (items) {
-  //           items[currentFocus].click();
-  //         };
-  //       } else {
-  //         let autoItem = document.createElement('div');
-  //         autoItem.classList.add('autocomplete-item')
-  //         autoItem.textContent = 'Нет совпадений';
-  //         autoList.append(autoItem)
-  //       }
-  //     };
-  //   });
+        if (clients[i].toLowerCase().includes(inputValue.toLowerCase())) {
+          const index = clients[i].toLowerCase().indexOf(inputValue.toLowerCase());
 
-  //   function addActive(el) {
-  //     if (!el) {
-  //       return false;
-  //     }
-  //     removeActive(el);
-  //     if (currentFocus >= el.length) {
-  //       currentFocus = 0;
-  //     }
-  //     if (currentFocus < 0) {
-  //       currentFocus = el.length - 1;
-  //     }
-  //     el[currentFocus].classList.add('autocomplete-active');
-  //   };
+          const indexLast = index + inputValue.length;
 
-  //   function removeActive(el) {
-  //     for (let elem of el) {
-  //       elem.classList.remove('autocomplete-active');
-  //     }
-  //   }
+          let autoItem = document.createElement('div');
 
-  //   function closeAllItems(elem) {
-  //     let allItems = document.querySelectorAll('.autocomplete-item').forEach((el) => {
-  //       if ((elem != el) && (elem != input)) {
-  //         el.parentNode.removeChild(el);
-  //       }
-  //     })
-  //   }
+          autoItem.classList.add('autocomplete-item');
+
+          autoItem.innerHTML = `${clients[i].slice(0, index)}<strong>${clients[i].slice(index, indexLast)}</strong>${clients[i].slice(indexLast)}<input type='hidden' value='${clients[i]}'>`;
+
+          autoItem.addEventListener('click', (e) => {
+            if (document.querySelector('.in-search')) {
+              document.querySelector('.in-search').classList.remove('in-search');
+            }
+
+            input.value = e.target.querySelector('input').value;
+            
+            closeAllItems();
+
+            document.querySelectorAll('.tbody__td--name').forEach((el) => {
+              if (el.textContent == input.value) {
+                el.parentNode.classList.add('in-search');
+                let row = document.querySelector('.in-search');
+                row.scrollIntoView({ block: "center", behavior: "smooth" });
+              }
+            })
+          })
+
+          autoList.append(autoItem);
+        }
+      }
+    })
+
+    input.addEventListener('keydown', (e) => {
+
+      let items = document.querySelectorAll('.autocomplete-item');
+
+      if (e.key == 'ArrowDown') {
+        currentFocus++;
+        addActive(items)
+      } else if (e.key == 'ArrowUp') {
+        currentFocus--;
+        addActive(items)
+      } else if (e.key == 'Enter') {
+        e.preventDefault();
+        if (currentFocus > -1) {
+          if (items) {
+            items[currentFocus].click();
+          };
+        } else {
+          let autoItem = document.createElement('div');
+          autoItem.classList.add('autocomplete-item')
+          autoItem.textContent = 'Нет совпадений';
+          autoList.append(autoItem);
+        }
+      };
+    });
+
+    function addActive(el) {
+      if (!el) {
+        return false;
+      }
+      removeActive(el);
+      if (currentFocus >= el.length) {
+        currentFocus = 0;
+      }
+      if (currentFocus < 0) {
+        currentFocus = el.length - 1;
+      }
+      el[currentFocus].classList.add('autocomplete-active');
+    };
+
+    function removeActive(el) {
+      for (let elem of el) {
+        elem.classList.remove('autocomplete-active');
+      }
+    }
+
+    function closeAllItems(elem) {
+      let allItems = document.querySelectorAll('.autocomplete-item').forEach((el) => {
+        if ((elem != el) && (elem != input)) {
+          el.parentNode.removeChild(el);
+        }
+      })
+    }
 
 
-  //   document.addEventListener('click', (e) => {
-  //     closeAllItems(e.target)
-  //   });
-  // };
-  // autocomplete();
+    document.addEventListener('click', (e) => {
+      closeAllItems(e.target)
+    });
+  };
+  autocomplete();
 
-  // document.addEventListener('click', (e) => {
-  //   const target = e.target;
-  //   if (!target.closest('.header__input') && !target.closest('.autocomplete-item')) {
-  //     if (document.querySelector('.in-search')) {
-  //       document.querySelector('.in-search').classList.remove('in-search')
-  //     }
-  //   }
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!target.closest('.header__input') && !target.closest('.autocomplete-item')) {
+      if (document.querySelector('.in-search')) {
+        document.querySelector('.in-search').classList.remove('in-search')
+      }
+    }
 
-  // })
+  })
 
-  // ---------- Закрытие модалки по клику по фону + кнопка сохранить и удалить контакт
-  // document.querySelector('.new-client__modal').addEventListener('click', (e) => {
-  //   e.preventDefault()
-  //   const target = e.target;
-  //   if (target.closest('.new-client__label')) {
-  //     const attr = target.closest('.new-client__label').getAttribute('for');
-  //     document.getElementById(`${attr}`).focus();
-  //   }
-  //   if (target.closest('.save-btn')) {
-  //     if (document.querySelector('.new-client-submit')) {
-  //       newClientSubmit()
-  //     }
-  //   }
-  //   if (target.closest('.new-contact__btn')) {
-  //     e.preventDefault();
-  //     let targetBtn = target.closest('.new-contact__btn').parentNode;
-  //     targetBtn.remove()
-  //     allNewContacts = document.querySelectorAll('.new-contact');
-  //     console.log(allNewContacts.length)
-  //     if (allNewContacts.length < 10) {
-  //       document.querySelector('.add-contact__btn').classList.remove('is-hidden')
-  //     };
-  //     if (allNewContacts.length == 0) {
-  //       document.querySelector('.add-contact').classList.remove('is-open')
-  //     }
-  //     return
-  //   }
+  // ---------- Закрытие модального окна по клику снаружи + кнопка сохранить и кнопка удалить контакт
+  document.querySelector('.new-client').addEventListener('click', (e) => {
+    e.preventDefault()
+    const target = e.target;
+    if (target.closest('.new-client__label')) {
+      const attr = target.closest('.new-client__label').getAttribute('for');
+      document.getElementById(`${attr}`).focus();
+    }
+    if (target.closest('.save-btn')) {
+      if (document.querySelector('.new-client-submit')) {
+        newClientSubmit()
+      }
+    }
+    if (target.closest('.new-contact__btn')) {
+      e.preventDefault();
+      let targetBtn = target.closest('.new-contact__btn').parentNode;
+      targetBtn.remove()
+      allNewContacts = document.querySelectorAll('.new-contact');
+      console.log(allNewContacts.length)
+      if (allNewContacts.length < 10) {
+        document.querySelector('.add-contact__btn').classList.remove('is-hidden')
+      };
+      if (allNewContacts.length == 0) {
+        document.querySelector('.add-contact').classList.remove('is-open')
+      }
+      return
+    }
 
-  //   if (!target.closest('.new-client__modal') && !target.closest('.delete-box') && !target.closest('.add-contact')) {
-  //     if (document.querySelector('.inside')) {
-  //       document.querySelector('.new-client__modal').classList.add('modal-open');
-  //       document.querySelector('.delete-box').classList.remove('modal-open');
-  //       document.querySelectorAll('.inside').forEach((el) => {
-  //         el.classList.remove('inside')
-  //       })
-  //     } else if (document.querySelector('.outside')) {
-  //       document.querySelector('.delete-box').classList.remove('modal-open');
-  //       document.querySelector('.new-client').classList.remove('modal-open');
-  //       document.querySelectorAll('.outside').forEach((el) => {
-  //         el.classList.remove('outside')
-  //       })
-  //     } else if (!document.querySelector('.inside') && !document.querySelector('.outside')) {
-  //       modalClose()
-  //     }
+    if (!target.closest('.new-client__modal') && !target.closest('.delete-box') && !target.closest('.add-contact')) {
+      if (document.querySelector('.inside')) {
+        document.querySelector('.new-client__modal').classList.add('modal-open');
+        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelectorAll('.inside').forEach((el) => {
+          el.classList.remove('inside')
+        })
+      } else if (document.querySelector('.outside')) {
+        document.querySelector('.delete-box').classList.remove('modal-open');
+        document.querySelector('.new-client').classList.remove('modal-open');
+        document.querySelectorAll('.outside').forEach((el) => {
+          el.classList.remove('outside')
+        })
+      } else if (!document.querySelector('.inside') && !document.querySelector('.outside')) {
+        modalClose()
+      }
 
-  //   }
-  // })
+    }
+  })
 
 });
